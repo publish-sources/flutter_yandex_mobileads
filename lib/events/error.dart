@@ -10,8 +10,10 @@
 part of yandex_mobileads;
 
 class AdLoadError extends Error {
-
+  /// Error code.
   final int code;
+
+  /// Error description.
   final String description;
 
   AdLoadError(this.code, this.description);
@@ -21,7 +23,6 @@ class AdLoadError extends Error {
 }
 
 class AdShowError extends Error {
-
   final int code;
   final String description;
 

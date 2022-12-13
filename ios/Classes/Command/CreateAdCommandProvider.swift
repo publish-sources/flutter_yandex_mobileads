@@ -8,7 +8,6 @@
  */
 
 import Flutter
-import Foundation
 import YandexMobileAds
 
 class CreateAdCommandProvider: CommandProvider {
@@ -50,10 +49,10 @@ class CreateAdCommandProvider: CommandProvider {
     }
 
     private func createAd(
-            result: MethodCallResult,
-            channelName: String,
-            delegate: EventDelegate,
-            providerFactory: (_ onDestroy: @escaping () -> Void) -> CommandProvider
+        result: MethodCallResult,
+        channelName: String,
+        delegate: EventDelegate,
+        providerFactory: (_ onDestroy: @escaping () -> Void) -> CommandProvider
     ) {
         let id = idCount
         idCount += 1

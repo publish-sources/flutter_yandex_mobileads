@@ -10,16 +10,34 @@
 part of yandex_mobileads;
 
 enum _CallbackName {
-
+  /// Notifies that the ad loaded successfully.
   onAdLoaded,
+
+  /// Notifies that the ad failed to load.
   onAdFailedToLoad,
+
+  /// Notifies that the user clicked on the ad.
   onAdClicked,
+
+  /// Notifies that the ad has been shown.
   onAdShown,
+
+  /// Notifies that the ad can’t be displayed.
   onAdFailedToShow,
+
+  /// Notifies that the ad has been dismissed.
   onAdDismissed,
+
+  /// Notifies that the user should be rewarded for viewing an ad (impression counted).
   onRewarded,
+
+  /// Notifies that the app will run in the background now because the user clicked on the ad and is about to switch to a different app (Phone, App Store, and so on).
   onLeftApplication,
+
+  /// Notifies that the user returned to app.
   onReturnedToApplication,
+
+  /// Notifies that an ad impression has been counted.
   onImpression;
 
   static _CallbackName? find(String name) {

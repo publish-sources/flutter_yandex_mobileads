@@ -10,7 +10,6 @@
 part of yandex_mobileads;
 
 class RewardedAd extends _FullscreenAd {
-
   static const _channelPath = 'yandex_mobileads.rewardedAd';
   static const _createChannel = MethodChannel('yandex_mobileads.createAd');
 
@@ -65,8 +64,8 @@ class RewardedAd extends _FullscreenAd {
   @override
   Future<Reward?> waitForDismiss() async {
     Reward? reward;
-    _eventListener.waitFor([_CallbackName.onRewarded])
-      .then((result) => reward = Reward._(result['type'], result['amount']));
+    _eventListener.waitFor([_CallbackName.onRewarded]).then(
+        (result) => reward = Reward._(result['type'], result['amount']));
     await _eventListener.waitFor([_CallbackName.onAdDismissed]);
     return reward;
   }

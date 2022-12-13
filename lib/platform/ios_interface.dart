@@ -10,7 +10,6 @@
 part of yandex_mobileads;
 
 class _IosInterface implements _PlatformInterface {
-
   @override
   Future<void> initialize(MethodChannel channel) async {}
 

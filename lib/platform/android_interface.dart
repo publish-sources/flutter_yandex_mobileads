@@ -10,7 +10,6 @@
 part of yandex_mobileads;
 
 class _AndroidInterface implements _PlatformInterface {
-
   @override
   Future<void> initialize(MethodChannel channel) async {
     await channel.invokeMethod('initialize');

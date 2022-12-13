@@ -7,7 +7,6 @@
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
  */
 
-import Foundation
 import Flutter
 
 class EventDelegate: NSObject, FlutterStreamHandler {

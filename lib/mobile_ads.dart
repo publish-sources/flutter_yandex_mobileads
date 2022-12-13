@@ -14,22 +14,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 part 'ad.dart';
-part 'fullscreen_ad.dart';
-part 'banner/ad_size.dart';
 part 'ad_request.dart';
+part 'banner/ad_size.dart';
 part 'banner/banner_ad.dart';
-part 'interstitial/interstitial_ad.dart';
-part 'rewarded/rewarded_ad.dart';
-part 'rewarded/reward.dart';
 part 'events/callback_name.dart';
-part 'events/event_listener.dart';
 part 'events/error.dart';
-part 'platform/platform_interface.dart';
+part 'events/event_listener.dart';
+part 'fullscreen_ad.dart';
+part 'interstitial/interstitial_ad.dart';
 part 'platform/android_interface.dart';
 part 'platform/ios_interface.dart';
+part 'platform/platform_interface.dart';
+part 'rewarded/reward.dart';
+part 'rewarded/rewarded_ad.dart';
 
+/// This class allows you to set general SDK settings.
 class MobileAds {
-
   static const _path = 'yandex_mobileads.mobileAds';
   static const _channel = MethodChannel(_path);
 
@@ -39,8 +39,8 @@ class MobileAds {
   static var _debugErrorIndicatorEnabled = false;
   static var _ageRestrictedUser = false;
 
-  /// Returns the library version as a string.
-  static const libraryVersion = '0.0.1';
+  /// Returns the plugin version as a string.
+  static const pluginVersion = '0.1.0';
 
   /// A private constructor to prevent instancing.
   /// Using it inside the library won't be useful.
@@ -50,9 +50,9 @@ class MobileAds {
   static bool get loggingEnabled => _loggingEnabled;
 
   /// Enables logging.
-  static Future<void> enableLogging() async {
-    _loggingEnabled = true;
-    await _channel.invokeMethod('enableLogging');
+  static Future<void> setLogging(bool value) async {
+    await _channel.invokeMethod('enableLogging', value);
+    _loggingEnabled = value;
   }
 
   /// Whether using location for targeting ads is allowed.
@@ -78,9 +78,9 @@ class MobileAds {
   static bool get debugErrorIndicatorEnabled => _debugErrorIndicatorEnabled;
 
   /// Enables or disables the debug error indicator.
-  static Future<void> enableDebugErrorIndicator() async {
-    await _channel.invokeMethod('enableDebugErrorIndicator');
-    _debugErrorIndicatorEnabled = true;
+  static Future<void> setDebugErrorIndicator(bool value) async {
+    await _channel.invokeMethod('enableDebugErrorIndicator', value);
+    _debugErrorIndicatorEnabled = value;
   }
 
   static bool get ageRestrictedUser => _ageRestrictedUser;

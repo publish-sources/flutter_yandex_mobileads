@@ -9,19 +9,19 @@
 
 Pod::Spec.new do |s|
   s.name             = 'yandex_mobileads'
-  s.version          = '1.0.0'
+  s.version          = '0.1.0'
   s.summary          = 'Flutter plugin for Yandex Mobile Ads SDK'
   s.description      = <<-DESC
 Flutter plugin for Yandex Mobile Ads SDK
                        DESC
-  s.homepage         = 'https://tech.yandex.ru/mobile-ads/'
+  s.homepage         = 'https://ads.yandex.com/monetization/'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Yandex' => 'mobads@yandex-team.ru' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'YandexMobileAds', '~> 5.2.1'
-  s.platform = :ios, '10.0'
+  s.dependency 'YandexMobileAds', '~> 5.3.1'
+  s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = {

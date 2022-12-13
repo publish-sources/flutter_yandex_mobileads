@@ -8,7 +8,6 @@
  */
 
 import Flutter
-import Foundation
 import YandexMobileAds
 
 class MobileAdsCommandProvider: CommandProvider {

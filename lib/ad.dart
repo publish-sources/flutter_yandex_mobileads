@@ -10,14 +10,13 @@
 part of yandex_mobileads;
 
 mixin _Ad {
-
   static const pluginType = 'plugin_type';
   static const pluginVersion = 'plugin_version';
   static const flutter = 'flutter';
 
-  static final _finalizer = Finalizer<MethodChannel>(
-      (channel) => channel.invokeMethod('destroy')
-  );
+  static final _finalizer = Finalizer<MethodChannel>((channel) {
+    channel.invokeMethod('destroy');
+  });
 
   late final String adUnitId;
   late final _EventListener _eventListener;
@@ -31,16 +30,20 @@ mixin _Ad {
     final map = adRequest?._toMap() ?? {};
     map['parameters'] = {
       pluginType: flutter,
-      pluginVersion: MobileAds.libraryVersion,
+      pluginVersion: MobileAds.pluginVersion,
     }..addAll(adRequest?.parameters ?? {});
     _channel.invokeMethod('load', map);
-    var result = await _eventListener.waitFor([
-      _CallbackName.onAdLoaded,
-      _CallbackName.onAdFailedToLoad
-    ]);
+    var result = await _eventListener
+        .waitFor([_CallbackName.onAdLoaded, _CallbackName.onAdFailedToLoad]);
     if (result['name'] == _CallbackName.onAdFailedToLoad.name) {
       throw AdLoadError(result['code'], result['description']);
     }
     _isLoaded = true;
+    _finalizer.attach(this, _channel);
+  }
+
+  Future<void> destroy() async {
+    _channel.invokeMethod('destroy');
+    _finalizer.detach(this);
   }
 }

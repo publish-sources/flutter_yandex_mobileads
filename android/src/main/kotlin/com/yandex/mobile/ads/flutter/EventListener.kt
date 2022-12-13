@@ -16,18 +16,18 @@ import io.flutter.plugin.common.EventChannel
 
 internal abstract class EventListener : EventChannel.StreamHandler {
 
-    private var sink: EventChannel.EventSink? = null
+    private var eventBridge: EventChannel.EventSink? = null
 
     protected fun respond(callback: String, args: Map<String, Any?> = mapOf()) {
-        sink?.success(args + ("name" to callback))
+        eventBridge?.success(args + ("name" to callback))
     }
 
     override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
-        sink = events
+        eventBridge = events
     }
 
     override fun onCancel(arguments: Any?) {
-        sink = null
+        eventBridge = null
     }
 
     open fun onAdLoaded() = respond(ON_AD_LOADED)
@@ -39,15 +39,6 @@ internal abstract class EventListener : EventChannel.StreamHandler {
 
     fun onAdClicked() = respond(ON_AD_CLICKED)
 
-    fun onAdShown() = respond(ON_AD_SHOWN)
-
-    fun onAdDismissed() = respond(ON_AD_DISMISSED)
-
-    fun onRewarded(reward: Reward) = respond(
-        ON_REWARDED,
-        mapOf(AMOUNT to reward.amount, TYPE to reward.type),
-    )
-
     fun onLeftApplication() = respond(ON_LEFT_APPLICATION)
 
     fun onReturnedToApplication() = respond(ON_RETURNED_TO_APPLICATION)
@@ -57,7 +48,7 @@ internal abstract class EventListener : EventChannel.StreamHandler {
         mapOf(IMPRESSION_DATA to impressionData?.rawData),
     )
 
-    companion object {
+    protected companion object {
 
         const val ON_AD_LOADED = "onAdLoaded"
         const val ON_AD_FAILED_TO_LOAD = "onAdFailedToLoad"

@@ -9,8 +9,8 @@
 
 part of yandex_mobileads;
 
+/// This class is responsible for loading an interstitial ad.
 class InterstitialAd extends _FullscreenAd {
-
   static const _channelPath = 'yandex_mobileads.interstitialAd';
   static const _createChannel = MethodChannel('yandex_mobileads.createAd');
 
@@ -42,8 +42,7 @@ class InterstitialAd extends _FullscreenAd {
     int? id = await _createChannel.invokeMethod('interstitialAd', adUnitId);
     if (id == null) {
       throw ArgumentError(
-        'something went wrong while creating interstitial ad'
-      );
+          'something went wrong while creating interstitial ad');
     }
 
     return InterstitialAd._(

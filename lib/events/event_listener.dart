@@ -10,17 +10,33 @@
 part of yandex_mobileads;
 
 class _EventListener {
-
   final String channelName;
 
+  /// Notifies that the ad loaded successfully.
   final void Function()? onAdLoaded;
+
+  /// Notifies that the ad failed to load.
   final void Function(AdLoadError error)? onAdFailedToLoad;
+
+  /// Notifies that the ad has been shown.
   final void Function()? onAdShown;
+
+  /// Notifies that the ad has been dismissed.
   final void Function()? onAdDismissed;
+
+  /// Notifies that the user should be rewarded for viewing an ad (impression counted).
   final void Function(Reward reward)? onRewarded;
+
+  /// Notifies that the user clicked on the ad.
   final void Function()? onAdClicked;
+
+  /// Notifies that the app will run in the background now because the user clicked on the ad and is about to switch to a different app (Phone, App Store, and so on).
   final void Function()? onLeftApplication;
+
+  /// Notifies that the user returned to app.
   final void Function()? onReturnedToApplication;
+
+  /// Notifies that an ad impression has been counted.
   final void Function(String? impressionData)? onImpression;
 
   late Stream eventStream;
@@ -46,9 +62,8 @@ class _EventListener {
           onAdLoaded?.call();
           break;
         case _CallbackName.onAdFailedToLoad:
-          onAdFailedToLoad?.call(
-              AdLoadError(result['code'], result['description'])
-          );
+          onAdFailedToLoad
+              ?.call(AdLoadError(result['code'], result['description']));
           break;
         case _CallbackName.onAdClicked:
           onAdClicked?.call();

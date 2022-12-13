@@ -10,7 +10,6 @@
 part of yandex_mobileads;
 
 class BannerAd with _Ad {
-
   static const _channelPath = 'yandex_mobileads.bannerAd';
   static var _idCount = 0;
 
@@ -19,16 +18,15 @@ class BannerAd with _Ad {
   final int _id = _idCount++;
 
   late final Widget _widget = _PlatformInterface.instance.buildBannerAd(
-    adUnitId: adUnitId,
-    adSize: adSize,
-    id: _id,
-    onPlatformViewCreated: (_) async {
-      _eventListener.setupCallbacks();
-      load(adRequest: adRequest);
-      final result = await _eventListener.waitFor([_CallbackName.onAdLoaded]);
-      _onAdLoaded?.call(result['width'], result['height']);
-    }
-  );
+      adUnitId: adUnitId,
+      adSize: adSize,
+      id: _id,
+      onPlatformViewCreated: (_) async {
+        _eventListener.setupCallbacks();
+        load(adRequest: adRequest);
+        final result = await _eventListener.waitFor([_CallbackName.onAdLoaded]);
+        _onAdLoaded?.call(result['width'], result['height']);
+      });
 
   void Function(int width, int height)? _onAdLoaded;
 
@@ -36,7 +34,6 @@ class BannerAd with _Ad {
     required String adUnitId,
     required this.adSize,
     this.adRequest,
-
     void Function()? onAdLoaded,
     void Function(AdLoadError error)? onAdFailedToLoad,
     void Function()? onAdClicked,
@@ -55,12 +52,10 @@ class BannerAd with _Ad {
       onReturnedToApplication: onReturnedToApplication,
       onImpression: onImpression,
     );
-    _Ad._finalizer.attach(this, _channel);
   }
 }
 
 class AdWidget extends StatefulWidget {
-
   final BannerAd bannerAd;
 
   const AdWidget({
@@ -81,9 +76,9 @@ class _AdWidgetState extends State<AdWidget> {
     width = widget.bannerAd.adSize.width;
     height = AdSize._initialHeight;
     widget.bannerAd._onAdLoaded = (width, height) => setState(() {
-      this.width = width;
-      this.height = height;
-    });
+          this.width = width;
+          this.height = height;
+        });
   }
 
   @override

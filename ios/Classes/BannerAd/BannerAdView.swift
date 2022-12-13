@@ -7,7 +7,6 @@
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
  */
 
-import Foundation
 import Flutter
 import YandexMobileAds
 
@@ -27,7 +26,6 @@ final class BannerAdView: NSObject, FlutterPlatformView {
     ) {
         banner = YMAAdView(adUnitID: adUnitId, adSize: adSize)
         banner.delegate = delegate
-        banner.removeFromSuperview()
         self.methodChannel = methodChannel
         self.eventChannel = eventChannel
     }

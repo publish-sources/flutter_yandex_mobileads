@@ -10,7 +10,6 @@
 part of yandex_mobileads;
 
 abstract class _FullscreenAd with _Ad {
-
   _FullscreenAd({
     required String adUnitId,
     required String channelName,
@@ -40,7 +39,6 @@ abstract class _FullscreenAd with _Ad {
       onImpression: onImpression,
     );
     _eventListener.setupCallbacks();
-    _Ad._finalizer.attach(this, _channel);
   }
 
   Future<void> show() async {
@@ -52,10 +50,6 @@ abstract class _FullscreenAd with _Ad {
     if (result['name'] == _CallbackName.onAdFailedToShow.name) {
       throw AdShowError(result['code'], result['description']);
     }
-  }
-
-  Future<void> destroy() async {
-    await _channel.invokeMethod('destroy');
   }
 
   Future waitForDismiss();

@@ -8,7 +8,6 @@
  */
 
 import Flutter
-import Foundation
 
 class MethodCallResult {
 
@@ -40,10 +39,4 @@ class MethodCallResult {
     func success(_ arg: Any? = nil) {
         result(arg)
     }
-}
-
-enum ErrorReason {
-    case argsIsNotMap
-    case argsIsNotBool
-    case noViewController
 }

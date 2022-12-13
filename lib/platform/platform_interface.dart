@@ -10,7 +10,6 @@
 part of yandex_mobileads;
 
 abstract class _PlatformInterface {
-
   static final instance = _createInstance();
 
   static _PlatformInterface _createInstance() {
@@ -21,8 +20,7 @@ abstract class _PlatformInterface {
         return _IosInterface();
       default:
         throw UnsupportedError(
-            'This plugin is only supported on Android and iOS.'
-        );
+            'This plugin is only supported on Android and iOS.');
     }
   }
 

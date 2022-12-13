@@ -7,7 +7,6 @@
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
  */
 
-import Foundation
 import YandexMobileAds
 
 extension Dictionary where Key == String {
@@ -28,13 +27,4 @@ extension Dictionary where Key == String {
     private subscript<T>(_ key: AdRequestParameter) -> T? {
         self[key.rawValue] as? T
     }
-}
-
-private enum AdRequestParameter: String {
-    case age
-    case contextQuery
-    case contextTags
-    case gender
-    case parameters
-    case biddingData
 }

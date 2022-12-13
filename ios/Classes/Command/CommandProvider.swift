@@ -8,7 +8,6 @@
  */
 
 import Flutter
-import Foundation
 
 typealias CommandHandler = (Any?, MethodCallResult) -> Void
 

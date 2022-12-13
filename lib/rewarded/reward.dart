@@ -9,9 +9,12 @@
 
 part of yandex_mobileads;
 
+/// Class contains information about the reward given to the user.
 class Reward {
-
+  /// Type of reward.
   final String type;
+
+  /// Amount of reward.
   final int amount;
 
   const Reward._(this.type, this.amount);

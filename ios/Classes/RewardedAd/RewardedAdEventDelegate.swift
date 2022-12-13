@@ -7,7 +7,6 @@
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
  */
 
-import Foundation
 import YandexMobileAds
 
 class RewardedAdEventDelegate: EventDelegate, YMARewardedAdDelegate {
