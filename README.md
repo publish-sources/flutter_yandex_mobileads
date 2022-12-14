@@ -3,10 +3,10 @@
 Flutter plugin for Yandex Mobile Ads SDK. Plugin allows Flutter developers to integrate Yandex Mobile Ads SDK into Android and iOS apps.
 
 ## Documentation
-Documentation could be found at the [official website](DOCUMENTATION)
+Documentation could be found at the [official website] [DOCUMENTATION]
 
 ## License
-EULA is available at [EULA website](LICENSE)
+EULA is available at [EULA website] [LICENSE]
 
 ## Quick start in Android Studio / Visual Studio Code
 
@@ -22,12 +22,11 @@ EULA is available at [EULA website](LICENSE)
 
 ```yaml
 dependencies:
-    # ...
-    yandex_mobileads: ^0.1.0
+  yandex_mobileads: ^1.1.0
 ```
 
 ### Mediation
-##### You can also connect our libraries with all available mediations.
+##### You can also connect our libraries with all available mediations:
 
 #### Android
 `android/app/build.gradle`:
