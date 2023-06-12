@@ -18,22 +18,27 @@ import com.yandex.mobile.ads.flutter.common.command.MobileAdsCommand
 import com.yandex.mobile.ads.flutter.common.command.MobileAdsCommandHandler
 import com.yandex.mobile.ads.flutter.interstitial.command.CreateInterstitialCommandHandler
 import com.yandex.mobile.ads.flutter.rewarded.command.CreateRewardedCommandHandler
-import io.flutter.plugin.common.BinaryMessenger
+import com.yandex.mobile.ads.flutter.util.ActivityContextHolder
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.FlutterPlugin.FlutterPluginBinding
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 
-class YandexMobileAdsPlugin : FlutterPlugin {
+class YandexMobileAdsPlugin : FlutterPlugin, ActivityAware {
+
+    private val activityContextHolder = ActivityContextHolder()
 
     override fun onAttachedToEngine(binding: FlutterPluginBinding) {
         val factory = BannerAdViewFactory(binding.binaryMessenger)
-        val context = binding.applicationContext
+        val applicationContext = binding.applicationContext
         binding.platformViewRegistry
             .registerViewFactory(BANNER_VIEW_TYPE, factory)
 
         val providers = listOf(
-            getMobileAdsCommandHandlerProvider(context),
-            getCreateAdHandlerProvider(context, binding.binaryMessenger)
+            getMobileAdsCommandHandlerProvider(applicationContext),
+            getCreateAdHandlerProvider(activityContextHolder, binding.binaryMessenger)
         )
 
         providers.forEach { provider ->
@@ -50,14 +55,14 @@ class YandexMobileAdsPlugin : FlutterPlugin {
     }
 
     private fun getCreateAdHandlerProvider(
-        context: Context,
+        activityContextHolder: ActivityContextHolder,
         messenger: BinaryMessenger,
     ): CreateAdCommandHandlerProvider {
         val adCreator = AdCreator(messenger)
         return CreateAdCommandHandlerProvider(
             mapOf(
-                INTERSTITIAL_AD to CreateInterstitialCommandHandler(context, adCreator),
-                REWARDED_AD to CreateRewardedCommandHandler(context, adCreator),
+                INTERSTITIAL_AD to CreateInterstitialCommandHandler(activityContextHolder, adCreator),
+                REWARDED_AD to CreateRewardedCommandHandler(activityContextHolder, adCreator),
             )
         )
     }
@@ -71,6 +76,22 @@ class YandexMobileAdsPlugin : FlutterPlugin {
                 mobileAdsCommand.command to mobileAdsCommandHandler
             },
         )
+    }
+
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        activityContextHolder.onAttachedToActivity(binding)
+    }
+
+    override fun onDetachedFromActivityForConfigChanges() {
+        activityContextHolder.onDetachedFromActivity()
+    }
+
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+        activityContextHolder.onReattachedToActivityForConfigChanges(binding)
+    }
+
+    override fun onDetachedFromActivity() {
+        activityContextHolder.onDetachedFromActivity()
     }
 
     override fun onDetachedFromEngine(binding: FlutterPluginBinding) = Unit

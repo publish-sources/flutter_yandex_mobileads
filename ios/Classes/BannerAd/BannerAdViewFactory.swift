@@ -26,18 +26,18 @@ final class BannerAdViewFactory: NSObject, FlutterPlatformViewFactory {
         let params = args as? [String: Any?] ?? [:]
         let adUnitId: String = params[.adUnitId] ?? ""
         let id: Int = params[.id] ?? -1
-        let width: Int = params[.width] ?? 0
-        let height: Int = params[.height] ?? 0
+        let width: CGFloat = params[.width] ?? 0
+        let height: CGFloat = params[.height] ?? 0
         let type: String = params[.type] ?? ""
         let adSize: YMAAdSize
 
         switch AdSizeType(rawValue: type) {
         case .flexible:
-            adSize = YMAAdSize.flexibleSize(with: .init(width: width, height: height))
+            adSize = YMAAdSize.inlineSize(withWidth: width, maxHeight: height)
         case .sticky:
-            adSize = YMAAdSize.stickySize(withContainerWidth: CGFloat(width))
+            adSize = YMAAdSize.stickySize(withContainerWidth: width)
         default:
-            adSize = YMAAdSize.flexibleSize(with: .init(width: 0, height: 0))
+            adSize = YMAAdSize.inlineSize(withWidth: 0, maxHeight: 0)
         }
 
         let delegate = BannerAdEventDelegate()

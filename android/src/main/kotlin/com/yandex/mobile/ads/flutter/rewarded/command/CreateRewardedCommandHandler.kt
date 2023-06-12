@@ -9,28 +9,30 @@
 
 package com.yandex.mobile.ads.flutter.rewarded.command
 
-import android.content.Context
 import com.yandex.mobile.ads.flutter.common.AdCreator
 import com.yandex.mobile.ads.flutter.common.CommandError
 import com.yandex.mobile.ads.flutter.common.CommandHandler
 import com.yandex.mobile.ads.flutter.rewarded.RewardedAdCommandHandlerProvider
 import com.yandex.mobile.ads.flutter.rewarded.RewardedEventListener
+import com.yandex.mobile.ads.flutter.util.ActivityContextHolder
+import com.yandex.mobile.ads.flutter.util.error
 import com.yandex.mobile.ads.rewarded.RewardedAd
 import io.flutter.plugin.common.MethodChannel.Result
-import com.yandex.mobile.ads.flutter.util.error
 
 internal class CreateRewardedCommandHandler(
-    private val context: Context,
+    private val activityContextHolder: ActivityContextHolder,
     private val adCreator: AdCreator
 ) : CommandHandler {
 
-
     override fun handleCommand(command: String, args: Any?, result: Result) {
+        val context = activityContextHolder.activityContext ?: return
+
         val adUnitId = args as? String
         if (adUnitId.isNullOrEmpty()) {
             result.error(CommandError.NoAdUnitId)
             return
         }
+
         val ad = RewardedAd(context)
         val listener = RewardedEventListener()
         ad.setAdUnitId(adUnitId)

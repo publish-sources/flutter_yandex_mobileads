@@ -34,7 +34,7 @@ internal class BannerAdViewFactory(private val messenger: BinaryMessenger) :
         val width = params?.get(WIDTH) as? Int ?: 0
         val height = params?.get(HEIGHT) as? Int ?: 0
 
-        val adSize = parseAdSize(adSizeType, width, height)
+        val adSize = parseAdSize(context, adSizeType, width, height)
 
         val bannerView = BannerView(context, adUnitId, adSize)
         val listener = BannerEventListener { getLoadedBannerSize(context, bannerView) }
@@ -44,10 +44,10 @@ internal class BannerAdViewFactory(private val messenger: BinaryMessenger) :
         return bannerView
     }
 
-    private fun parseAdSize(adSizeType: String, width: Int, height: Int): AdSize {
+    private fun parseAdSize(context: Context, adSizeType: String, width: Int, height: Int): AdSize {
         return when (adSizeType) {
             FLEXIBLE -> AdSize.flexibleSize(width, height)
-            STICKY -> AdSize.stickySize(width)
+            STICKY -> AdSize.stickySize(context, width)
             else -> throw IllegalArgumentException("invalid size type")
         }
     }
@@ -57,7 +57,7 @@ internal class BannerAdViewFactory(private val messenger: BinaryMessenger) :
         bannerView: BannerView,
     ): Pair<Int, Int> {
         val bannerAdSize =
-            bannerView.getView().adSize ?: throw IllegalStateException("adSize does not exists")
+            bannerView.view.adSize ?: throw IllegalStateException("adSize does not exists")
         val widthMeasureSpec = getAdSizeMeasureSpec(bannerAdSize.getWidthInPixels(context))
         val heightMeasureSpec = getAdSizeMeasureSpec(bannerAdSize.getHeightInPixels(context))
         bannerView.view.measure(widthMeasureSpec, heightMeasureSpec)

@@ -22,10 +22,23 @@ class AdSize {
   /// [width] The width of the ad container in density-independent pixels (dp).
   /// [height] The height of the ad container in density-independent pixels (dp).
   ///
+  @Deprecated('Use [AdSize.inline] adaptive banners instead of flexible')
   const AdSize.flexible({
     required int width,
     required int height,
   }) : this._(width, height, _AdSizeType.flexible);
+
+  ///
+  /// Returns flexible banner size.
+  /// Banners with flexible sizes stretch to container width and height when possible.
+  ///
+  /// [width] The width of the ad container in density-independent pixels (dp).
+  /// [maxHeight] The maximum height of the ad container in density-independent pixels (dp).
+  ///
+  const AdSize.inline({
+    required int width,
+    required int maxHeight,
+  }) : this._(width, maxHeight, _AdSizeType.flexible);
 
   ///
   /// Returns sticky banner size with the given width.

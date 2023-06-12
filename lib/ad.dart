@@ -39,7 +39,7 @@ mixin _Ad {
       throw AdLoadError(result['code'], result['description']);
     }
     _isLoaded = true;
-    _finalizer.attach(this, _channel);
+    _finalizer.attach(this, _channel, detach: this);
   }
 
   Future<void> destroy() async {
