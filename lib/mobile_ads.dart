@@ -40,7 +40,7 @@ class MobileAds {
   static var _ageRestrictedUser = false;
 
   /// Returns the plugin version as a string.
-  static const pluginVersion = '1.1.0';
+  static const pluginVersion = '1.3.0';
 
   /// A private constructor to prevent instancing.
   /// Using it inside the library won't be useful.
