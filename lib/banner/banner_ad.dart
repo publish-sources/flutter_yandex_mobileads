@@ -1,7 +1,7 @@
 /*
  * This file is a part of the Yandex Advertising Network
  *
- * Version for Flutter (C) 2022 YANDEX
+ * Version for Flutter (C) 2023 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
@@ -9,24 +9,42 @@
 
 part of yandex_mobileads;
 
+/// This class is responsible for loading and showing a banner ad.
 class BannerAd with _Ad {
   static const _channelPath = 'yandex_mobileads.bannerAd';
   static var _idCount = 0;
 
-  final AdSize adSize;
+  static const _pluginType = 'plugin_type';
+  static const _pluginVersion = 'plugin_version';
+  static const _flutter = 'flutter';
+
+  final BannerAdSize adSize;
   final AdRequest? adRequest;
   final int _id = _idCount++;
 
+  late final String _adUnitId;
+  late final _BannerAdEventListener _eventListener;
+
   late final Widget _widget = _PlatformInterface.instance.buildBannerAd(
-      adUnitId: adUnitId,
+      adUnitId: _adUnitId,
       adSize: adSize,
       id: _id,
       onPlatformViewCreated: (_) async {
         _eventListener.setupCallbacks();
-        load(adRequest: adRequest);
+        loadAd(adRequest: adRequest);
         final result = await _eventListener.waitFor([_CallbackName.onAdLoaded]);
         _onAdLoaded?.call(result['width'], result['height']);
       });
+
+  Future<void> loadAd({AdRequest? adRequest}) async {
+    final map = adRequest?._toMap() ?? {};
+    map['parameters'] = {
+      _pluginType: _flutter,
+      _pluginVersion: MobileAds.pluginVersion,
+    }..addAll(adRequest?.parameters ?? {});
+    _channel.invokeMethod('load', map);
+    _finalizer.attach(this, _channel, detach: this);
+  }
 
   void Function(int width, int height)? _onAdLoaded;
 
@@ -35,15 +53,14 @@ class BannerAd with _Ad {
     required this.adSize,
     this.adRequest,
     void Function()? onAdLoaded,
-    void Function(AdLoadError error)? onAdFailedToLoad,
+    void Function(AdRequestError error)? onAdFailedToLoad,
     void Function()? onAdClicked,
     void Function()? onLeftApplication,
     void Function()? onReturnedToApplication,
-    void Function(String? impressionData)? onImpression,
-  }) {
-    this.adUnitId = adUnitId;
+    void Function(ImpressionData impressionData)? onImpression,
+  }) : _adUnitId = adUnitId {
     _channel = MethodChannel('$_channelPath.$_id');
-    _eventListener = _EventListener(
+    _eventListener = _BannerAdEventListener(
       channelName: '$_channelPath.$_id.events',
       onAdLoaded: onAdLoaded,
       onAdFailedToLoad: onAdFailedToLoad,
@@ -74,7 +91,7 @@ class _AdWidgetState extends State<AdWidget> {
   void initState() {
     super.initState();
     width = widget.bannerAd.adSize.width;
-    height = AdSize._initialHeight;
+    height = BannerAdSize._initialHeight;
     widget.bannerAd._onAdLoaded = (width, height) => setState(() {
           this.width = width;
           this.height = height;

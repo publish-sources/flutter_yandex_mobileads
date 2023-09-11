@@ -1,7 +1,7 @@
 /*
  * This file is a part of the Yandex Advertising Network
  *
- * Version for Flutter (C) 2022 YANDEX
+ * Version for Flutter (C) 2023 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
@@ -11,7 +11,6 @@ package com.yandex.mobile.ads.flutter
 
 import com.yandex.mobile.ads.common.AdRequestError
 import com.yandex.mobile.ads.common.ImpressionData
-import com.yandex.mobile.ads.rewarded.Reward
 import io.flutter.plugin.common.EventChannel
 
 internal abstract class EventListener : EventChannel.StreamHandler {
@@ -34,7 +33,7 @@ internal abstract class EventListener : EventChannel.StreamHandler {
 
     fun onAdFailedToLoad(error: AdRequestError) = respond(
         ON_AD_FAILED_TO_LOAD,
-        mapOf(CODE to error.code, DESCRIPTION to error.description)
+        mapOf(CODE to error.code, DESCRIPTION to error.description, AD_UNIT_ID to error.adUnitId)
     )
 
     fun onAdClicked() = respond(ON_AD_CLICKED)
@@ -53,9 +52,6 @@ internal abstract class EventListener : EventChannel.StreamHandler {
         const val ON_AD_LOADED = "onAdLoaded"
         const val ON_AD_FAILED_TO_LOAD = "onAdFailedToLoad"
         const val ON_AD_CLICKED = "onAdClicked"
-        const val ON_AD_SHOWN = "onAdShown"
-        const val ON_AD_DISMISSED = "onAdDismissed"
-        const val ON_REWARDED = "onRewarded"
         const val ON_LEFT_APPLICATION = "onLeftApplication"
         const val ON_RETURNED_TO_APPLICATION = "onReturnedToApplication"
         const val ON_IMPRESSION = "onImpression"
@@ -63,7 +59,6 @@ internal abstract class EventListener : EventChannel.StreamHandler {
         const val CODE = "code"
         const val DESCRIPTION = "description"
         const val IMPRESSION_DATA = "impressionData"
-        const val AMOUNT = "amount"
-        const val TYPE = "type"
+        const val AD_UNIT_ID = "adUnitId"
     }
 }

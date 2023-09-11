@@ -24,7 +24,7 @@ EULA is available at the [EULA website] [LICENSE]
 
 ```yaml
 dependencies:
-  yandex_mobileads: ^1.4.0
+  yandex_mobileads: ^6.0.0
 ```
 
 ### Mediation
@@ -40,7 +40,7 @@ You can use common mediation dependency including all adapters (recommended):
 ```groovy
 dependencies {
     // ...
-    implementation 'com.yandex.android:mobileads-mediation:5.10.0.0'
+    implementation 'com.yandex.android:mobileads-mediation:6.0.0.0'
 }
 ```
 
@@ -49,23 +49,24 @@ Or you can choose adapters manually and include only their dependencies:
 ```groovy
 dependencies {
     // ...
-    implementation 'com.yandex.android:mobileads:5.10.0'
-    implementation 'com.yandex.ads.mediation:mobileads-admob:22.1.0.0'
-    implementation 'com.yandex.ads.mediation:mobileads-mytarget:5.17.0.0'
-    implementation 'com.yandex.ads.mediation:mobileads-startapp:4.11.0.1'
-    implementation 'com.yandex.ads.mediation:mobileads-unityads:4.7.1.2'
-    implementation 'com.yandex.ads.mediation:mobileads-applovin:11.10.1.1'
-    implementation 'com.yandex.ads.mediation:mobileads-ironsource:7.3.1.1'
-    implementation 'com.yandex.ads.mediation:mobileads-adcolony:4.8.0.5'
-    implementation 'com.yandex.ads.mediation:mobileads-chartboost:9.3.0.2'
-    implementation 'com.yandex.ads.mediation:mobileads-pangle:5.3.0.4.0'
-    implementation 'com.yandex.ads.mediation:mobileads-tapjoy:13.0.1.1'
-    implementation 'com.yandex.ads.mediation:mobileads-vungle:6.12.1.2'
-    implementation 'com.yandex.ads.mediation:mobileads-mintegral:16.4.71.0'
+    implementation 'com.yandex.android:mobileads:6.0.0'
+    implementation 'com.yandex.ads.mediation:mobileads-google:22.2.0.0'
+    implementation 'com.yandex.ads.mediation:mobileads-inmobi: 10.5.5.0'
+    implementation 'com.yandex.ads.mediation:mobileads-mytarget:5.18.0.0'
+    implementation 'com.yandex.ads.mediation:mobileads-startapp:4.11.0.2'
+    implementation 'com.yandex.ads.mediation:mobileads-unityads:4.8.0.0'
+    implementation 'com.yandex.ads.mediation:mobileads-applovin:11.11.2.0'
+    implementation 'com.yandex.ads.mediation:mobileads-ironsource:7.4.0.0'
+    implementation 'com.yandex.ads.mediation:mobileads-adcolony:4.8.0.6'
+    implementation 'com.yandex.ads.mediation:mobileads-chartboost:9.3.1.0'
+    implementation 'com.yandex.ads.mediation:mobileads-pangle:5.3.0.4.1'
+    implementation 'com.yandex.ads.mediation:mobileads-tapjoy:13.1.2.0'
+    implementation 'com.yandex.ads.mediation:mobileads-vungle:6.12.1.3'
+    implementation 'com.yandex.ads.mediation:mobileads-mintegral:16.4.71.1'
 }
 ```
 
-If you plan to use Admob, you need to add your AdMob ID to the AndroidManifest.xml file
+If you plan to use AdMob, you need to add your AdMob ID to the AndroidManifest.xml file
 using a `<meta-data>` tag with `com.google.android.gms.ads.APPLICATION_ID`:
 
 ```xml
@@ -94,6 +95,8 @@ allprojects {
         maven { url "https://sdk.tapjoy.com/" }
         // Mintegral
         maven { url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" }
+        // Chartboost
+        maven { url "https://cboost.jfrog.io/artifactory/chartboost-ads/" }
     }
 }
 ```
@@ -105,25 +108,26 @@ You can use common mediation dependency including all adapters (recommended):
 `ios/Podfile`:
 
 ```ruby
-pod 'YandexMobileAdsMediation', '~> 5.9.0'
+pod 'YandexMobileAdsMediation', '~> 6.0.0'
 ```
 
 Or you can choose adapters manually and include only their dependencies:
 
 ```ruby
-pod 'YandexMobileAds', '~> 5.9.0'
-pod 'AdMobYandexMobileAdsAdapters', '10.7.0.0'
-pod 'MyTargetYandexMobileAdsAdapters', '5.17.5.1'
+pod 'YandexMobileAds', '~> 6.0.0'
+pod 'GoogleYandexMobileAdsAdapters', '10.9.0.0'
+pod 'InMobiYandexMobileAdsAdapters', '10.5.5.1'
+pod 'MyTargetYandexMobileAdsAdapters', '5.18.0.1'
 pod 'StartAppYandexMobileAdsAdapters', '4.7.3.0'
-pod 'UnityAdsYandexMobileAdsAdapters', '4.8.0.0'
-pod 'AppLovinYandexMobileAdsAdapters', '11.10.1.1'
-pod 'IronSourceYandexMobileAdsAdapters', '7.3.0.3'
-pod 'MintegralYandexMobileAdsAdapters', '7.3.9.0'
-pod 'AdColonyYandexMobileAdsAdapters', '4.9.0.4'
-pod 'ChartboostYandexMobileAdsAdapters', '9.3.1.0'
+pod 'UnityAdsYandexMobileAdsAdapters', '4.8.0.1'
+pod 'AppLovinYandexMobileAdsAdapters', '11.11.2.0'
+pod 'IronSourceYandexMobileAdsAdapters', '7.4.0.0'
+pod 'MintegralYandexMobileAdsAdapters', '7.4.2.0'
+pod 'AdColonyYandexMobileAdsAdapters', '4.9.0.5'
+pod 'ChartboostYandexMobileAdsAdapters', '9.4.0.0'
 ```
 
-If you plan to use Admob, add the GADApplicationIdentifier key with your AdMob ID
+If you plan to use AdMob, add the GADApplicationIdentifier key with your AdMob ID
 to your app's Info.plist file:
 
 `ios/Info.plist`:
@@ -140,8 +144,8 @@ Networks also require adding specific SKAdNetworkIdentifiers to SKAdNetworkItems
 ```xml
 <key>SKAdNetworkItems</key>
 <array>
-    <!-- Yandex Ads -->
     <dict>
+        <!-- Yandex Ads -->
         <key>SKAdNetworkIdentifier</key>
         <string>zq492l623r.skadnetwork</string>
     </dict>
@@ -183,7 +187,7 @@ Networks also require adding specific SKAdNetworkIdentifiers to SKAdNetworkItems
     <dict>
         <!-- Mintegral -->
         <key>SKAdNetworkIdentifier</key>
-        <string>KBD757YWX3.skadnetwork</string>
+        <string>kbd757ywx3.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
@@ -1028,90 +1032,6 @@ Networks also require adding specific SKAdNetworkIdentifiers to SKAdNetworkItems
     <dict>
         <key>SKAdNetworkIdentifier</key>
         <string>z4gj7hsk7h.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>wzmmZ9fp6w.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>4pfyvq9L8r.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>V72QYCH5UU.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>2U9PT9HC89.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>3RD42EKR43.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>4FZDC2EVR5.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>7953JERFZD.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>7UG5ZH24HU.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>9RD848Q2BZ.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>9T245VHMPL.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>CJ5566H2GA.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>F38H382JLK.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>KLF5C3L5U5.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>M8DBW4SV7C.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>W9Q455WK68.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>WZMMZ9FP6W.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>XY9T38CT57.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>YCLNXRL5PM.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>4PFYVQ9L8R.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>TL55SBB4FM.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>BD757YWX3.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>

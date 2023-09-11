@@ -1,9 +1,17 @@
+/*
+ * This file is a part of the Yandex Advertising Network
+ *
+ * Version for Flutter (C) 2023 YANDEX
+ *
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
+ */
+
 part of yandex_mobileads;
 
 /// An AdRequest contains targeting information used to fetch an ad.
-/// Ad requests are created using {@link AdRequest.Builder}.
 class AdRequest {
-  /// User's age that was set into AdRequest.Builder.
+  /// User's age.
   final int? age;
 
   /// Context query entered inside the app.
@@ -15,26 +23,42 @@ class AdRequest {
   /// User's gender.
   final String? gender;
 
-  /// Custom parameters for ad loading reequest.
+  /// User's location.
+  final AdLocation? location;
+
+  /// Custom parameters for ad loading request.
   final Map<String, String>? parameters;
 
   /// Bidding data for ad loading from mediation.
   final String? biddingData;
+
+  /// Header bidding data for ad loading from mediation, that contains bid id.
+  /// * Used only on iOS.
+  final String? headerBiddingData;
+
+  /// Preferred ad theme.
+  final AdTheme? preferredTheme;
 
   const AdRequest(
       {this.age,
       this.contextQuery,
       this.contextTags,
       this.gender,
+      this.location,
       this.parameters,
-      this.biddingData});
+      this.biddingData,
+      this.headerBiddingData,
+      this.preferredTheme});
 
   Map<String, dynamic> _toMap() => {
         'age': age.toString(),
         'contextQuery': contextQuery,
         'contextTags': contextTags,
         'gender': gender,
+        'location': location?._toMap(),
         'parameters': parameters,
         'biddingData': biddingData,
+        'headerBiddingData': headerBiddingData,
+        'preferredTheme': preferredTheme?.name,
       };
 }

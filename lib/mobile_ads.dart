@@ -1,7 +1,7 @@
 /*
  * This file is a part of the Yandex Advertising Network
  *
- * Version for Flutter (C) 2022 YANDEX
+ * Version for Flutter (C) 2023 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
@@ -15,18 +15,38 @@ import 'package:flutter/services.dart';
 
 part 'ad.dart';
 part 'ad_request.dart';
-part 'banner/ad_size.dart';
+part 'ad_request_configuration.dart';
+part 'ad_theme.dart';
+part 'ad_location.dart';
+part 'ad_info.dart';
+part 'ad_size.dart';
+part 'impression_data.dart';
+part 'simple_impression_data.dart';
+part 'banner/banner_ad_size.dart';
 part 'banner/banner_ad.dart';
 part 'events/callback_name.dart';
+part 'events/fullscreen_callback_name.dart';
 part 'events/error.dart';
-part 'events/event_listener.dart';
+part 'events/banner_ad_event_listener.dart';
+part 'events/fullscreen_event_listener.dart';
 part 'fullscreen_ad.dart';
+part 'fullscreen_ad_loader.dart';
+part 'appopenad/app_open_ad.dart';
+part 'appopenad/app_open_ad_listener.dart';
+part 'appopenad/app_open_ad_loader.dart';
+part 'appopenad/app_open_ad_load_listener.dart';
 part 'interstitial/interstitial_ad.dart';
+part 'interstitial/interstitial_ad_event_listener.dart';
+part 'interstitial/interstitial_ad_loader.dart';
+part 'interstitial/interstitial_ad_load_listener.dart';
 part 'platform/android_interface.dart';
 part 'platform/ios_interface.dart';
 part 'platform/platform_interface.dart';
 part 'rewarded/reward.dart';
 part 'rewarded/rewarded_ad.dart';
+part 'rewarded/rewarded_ad_event_listener.dart';
+part 'rewarded/rewarded_ad_loader.dart';
+part 'rewarded/rewarded_ad_load_listener.dart';
 
 /// This class allows you to set general SDK settings.
 class MobileAds {
@@ -40,7 +60,7 @@ class MobileAds {
   static var _ageRestrictedUser = false;
 
   /// Returns the plugin version as a string.
-  static const pluginVersion = '1.4.0';
+  static const pluginVersion = '6.0.0';
 
   /// A private constructor to prevent instancing.
   /// Using it inside the library won't be useful.

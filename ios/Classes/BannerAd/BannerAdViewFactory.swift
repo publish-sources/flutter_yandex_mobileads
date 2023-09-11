@@ -1,7 +1,7 @@
 /*
  * This file is a part of the Yandex Advertising Network
  *
- * Version for Flutter (C) 2022 YANDEX
+ * Version for Flutter (C) 2023 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
@@ -29,19 +29,19 @@ final class BannerAdViewFactory: NSObject, FlutterPlatformViewFactory {
         let width: CGFloat = params[.width] ?? 0
         let height: CGFloat = params[.height] ?? 0
         let type: String = params[.type] ?? ""
-        let adSize: YMAAdSize
+        let adSize: YMABannerAdSize
 
         switch AdSizeType(rawValue: type) {
-        case .flexible:
-            adSize = YMAAdSize.inlineSize(withWidth: width, maxHeight: height)
+        case .inline:
+            adSize = YMABannerAdSize.inlineSize(withWidth: width, maxHeight: height)
         case .sticky:
-            adSize = YMAAdSize.stickySize(withContainerWidth: width)
+            adSize = YMABannerAdSize.stickySize(withContainerWidth: width)
         default:
-            adSize = YMAAdSize.inlineSize(withWidth: 0, maxHeight: 0)
+            adSize = YMABannerAdSize.inlineSize(withWidth: 0, maxHeight: 0)
         }
 
         let delegate = BannerAdEventDelegate()
-        let name = "\(YandexMobileAdsPlugin.channelName).\(BannerAdCommandProvider.name).\(id)"
+        let name = "\(YandexMobileAdsPlugin.channelName).\(bannerAdChannelName).\(id)"
         let methodChannel = FlutterMethodChannel(name: name, binaryMessenger: messenger)
         let eventChannel = FlutterEventChannel(name: "\(name).events", binaryMessenger: messenger)
         let banner = BannerAdView(
@@ -64,10 +64,12 @@ final class BannerAdViewFactory: NSObject, FlutterPlatformViewFactory {
     func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
         FlutterStandardMessageCodec.sharedInstance()
     }
+    
+    private let bannerAdChannelName = "bannerAd"
 }
 
 private enum AdSizeType: String {
-    case flexible, sticky
+    case inline, sticky
 }
 
 private enum BannerCreationParameter: String {

@@ -1,7 +1,7 @@
 /*
  * This file is a part of the Yandex Advertising Network
  *
- * Version for Flutter (C) 2022 YANDEX
+ * Version for Flutter (C) 2023 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
@@ -11,9 +11,9 @@ package com.yandex.mobile.ads.flutter.banner
 
 import android.content.Context
 import android.view.View
-import com.yandex.mobile.ads.banner.AdSize
+import com.yandex.mobile.ads.banner.BannerAdSize
 import com.yandex.mobile.ads.flutter.YandexMobileAdsPlugin
-import com.yandex.mobile.ads.flutter.banner.BannerUtil.toDp
+import com.yandex.mobile.ads.flutter.banner.BannerAdUtil.toDp
 import com.yandex.mobile.ads.flutter.banner.command.DestroyBannerCommandHandler
 import com.yandex.mobile.ads.flutter.banner.command.LoadBannerCommandHandler
 import io.flutter.plugin.common.BinaryMessenger
@@ -32,37 +32,37 @@ internal class BannerAdViewFactory(private val messenger: BinaryMessenger) :
         val adSizeType = params?.get(TYPE) as? String ?: ""
         val id = params?.get(ID) as? Int ?: -1
         val width = params?.get(WIDTH) as? Int ?: 0
-        val height = params?.get(HEIGHT) as? Int ?: 0
+        val maxHeight = params?.get(HEIGHT) as? Int ?: 0
 
-        val adSize = parseAdSize(context, adSizeType, width, height)
+        val adSize = parseAdSize(context, adSizeType, width, maxHeight)
 
-        val bannerView = BannerView(context, adUnitId, adSize)
-        val listener = BannerEventListener { getLoadedBannerSize(context, bannerView) }
-        bannerView.view.setBannerAdEventListener(listener)
+        val bannerAdView = BannerAdView(context, adUnitId, adSize)
+        val listener = BannerAdEventListener { getLoadedBannerSize(context, bannerAdView) }
+        bannerAdView.view.setBannerAdEventListener(listener)
 
-        startFlutterCommunication(id, bannerView, listener)
-        return bannerView
+        startFlutterCommunication(id, bannerAdView, listener)
+        return bannerAdView
     }
 
-    private fun parseAdSize(context: Context, adSizeType: String, width: Int, height: Int): AdSize {
+    private fun parseAdSize(context: Context, adSizeType: String, width: Int, maxHeight: Int): BannerAdSize {
         return when (adSizeType) {
-            FLEXIBLE -> AdSize.flexibleSize(width, height)
-            STICKY -> AdSize.stickySize(context, width)
-            else -> throw IllegalArgumentException("invalid size type")
+            INLINE -> BannerAdSize.inlineSize(context, width, maxHeight)
+            STICKY -> BannerAdSize.stickySize(context, width)
+            else -> BannerAdSize.inlineSize(context, width, maxHeight)
         }
     }
 
     private fun getLoadedBannerSize(
         context: Context,
-        bannerView: BannerView,
+        bannerAdView: BannerAdView,
     ): Pair<Int, Int> {
         val bannerAdSize =
-            bannerView.view.adSize ?: throw IllegalStateException("adSize does not exists")
+            bannerAdView.view.adSize ?: throw IllegalStateException("adSize does not exists")
         val widthMeasureSpec = getAdSizeMeasureSpec(bannerAdSize.getWidthInPixels(context))
         val heightMeasureSpec = getAdSizeMeasureSpec(bannerAdSize.getHeightInPixels(context))
-        bannerView.view.measure(widthMeasureSpec, heightMeasureSpec)
+        bannerAdView.view.measure(widthMeasureSpec, heightMeasureSpec)
         val density = context.resources.displayMetrics.density
-        return bannerView.view.run {
+        return bannerAdView.view.run {
             measuredWidth.toDp(density) to measuredHeight.toDp(density)
         }
     }
@@ -76,18 +76,18 @@ internal class BannerAdViewFactory(private val messenger: BinaryMessenger) :
 
     private fun startFlutterCommunication(
         id: Int,
-        bannerView: BannerView,
-        listener: BannerEventListener
+        bannerAdView: BannerAdView,
+        listener: BannerAdEventListener
     ) {
         val name = "${YandexMobileAdsPlugin.ROOT}.$BANNER_AD.$id"
         val methodChannel = MethodChannel(messenger, name)
         val eventChannel = EventChannel(messenger, "$name.events")
 
-        val bannerHolder = BannerHolder(bannerView)
+        val bannerAdHolder = BannerAdHolder(bannerAdView)
         val provider = BannerAdCommandHandlerProvider(
             mapOf(
-                LOAD to LoadBannerCommandHandler(bannerHolder),
-                DESTROY to DestroyBannerCommandHandler(bannerHolder) {
+                LOAD to LoadBannerCommandHandler(bannerAdHolder),
+                DESTROY to DestroyBannerCommandHandler(bannerAdHolder) {
                     methodChannel.setMethodCallHandler(null)
                     eventChannel.setStreamHandler(null)
                 }
@@ -103,7 +103,7 @@ internal class BannerAdViewFactory(private val messenger: BinaryMessenger) :
     companion object {
 
         const val BANNER_AD = "bannerAd"
-        const val FLEXIBLE = "flexible"
+        const val INLINE = "inline"
         const val STICKY = "sticky"
 
         const val AD_UNIT_ID = "adUnitId"
