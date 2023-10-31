@@ -32,9 +32,6 @@ class AdRequestConfiguration {
   /// Custom parameters for ad loading request.
   final Map<String, String>? parameters;
 
-  /// Bidding data for ad loading from mediation.
-  final String? biddingData;
-
   /// Preferred ad theme.
   final AdTheme? preferredTheme;
 
@@ -46,7 +43,6 @@ class AdRequestConfiguration {
       this.gender,
       this.location,
       this.parameters,
-      this.biddingData,
       this.preferredTheme});
 
   Map<String, dynamic> _toMap() => {
@@ -57,7 +53,6 @@ class AdRequestConfiguration {
         'gender': gender,
         'location': location?._toMap(),
         'parameters': parameters,
-        'biddingData': biddingData,
         'preferredTheme': preferredTheme?.name,
       };
 }

@@ -29,13 +29,6 @@ class AdRequest {
   /// Custom parameters for ad loading request.
   final Map<String, String>? parameters;
 
-  /// Bidding data for ad loading from mediation.
-  final String? biddingData;
-
-  /// Header bidding data for ad loading from mediation, that contains bid id.
-  /// * Used only on iOS.
-  final String? headerBiddingData;
-
   /// Preferred ad theme.
   final AdTheme? preferredTheme;
 
@@ -46,8 +39,6 @@ class AdRequest {
       this.gender,
       this.location,
       this.parameters,
-      this.biddingData,
-      this.headerBiddingData,
       this.preferredTheme});
 
   Map<String, dynamic> _toMap() => {
@@ -57,8 +48,6 @@ class AdRequest {
         'gender': gender,
         'location': location?._toMap(),
         'parameters': parameters,
-        'biddingData': biddingData,
-        'headerBiddingData': headerBiddingData,
         'preferredTheme': preferredTheme?.name,
       };
 }

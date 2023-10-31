@@ -20,17 +20,15 @@ extension Dictionary where Key == String {
         request.gender = self[.gender]
         request.location = self[.location]
         request.adTheme = self.stringToYMAAdTheme(adTheme: self[.adTheme] as String?)
-        request.biddingData = self[.biddingData]
-        request.headerBiddingData = self[.headerBiddingData]
         request.parameters = self[.parameters]
-        
+
         return request
     }
-    
+
     private subscript<T>(_ key: AdRequestParameter) -> T? {
         self[key.rawValue] as? T
     }
-    
+
     func toAdRequestConfiguration(adUnitID: String) -> YMAAdRequestConfiguration {
         let requestConfiguration = YMAMutableAdRequestConfiguration(adUnitID: adUnitID)
         if let age = self[AdRequestParameter.age.rawValue] as? String {
@@ -45,13 +43,12 @@ extension Dictionary where Key == String {
             }
         }
         requestConfiguration.adTheme = self.stringToYMAAdTheme(adTheme: self[.adTheme] as String?)
-        requestConfiguration.biddingData = self[.biddingData]
         requestConfiguration.parameters = self[.parameters]
-        
+
         return requestConfiguration
     }
-    
-    
+
+
     private func stringToYMAAdTheme(adTheme: String?) -> YMAAdTheme {
         if let theme = adTheme {
             switch AdTheme(rawValue: theme) {
@@ -68,7 +65,7 @@ extension Dictionary where Key == String {
             return YMAAdTheme.unspecified
         }
     }
-    
+
     private func mapToCLLocation(locationMap: [String: Double]) -> CLLocation? {
         let latitude = locationMap["latitude"]
         let longitude = locationMap["longitude"]

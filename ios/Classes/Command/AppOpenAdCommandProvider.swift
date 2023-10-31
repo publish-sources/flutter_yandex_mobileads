@@ -11,7 +11,6 @@ import Flutter
 import YandexMobileAds
 
 final class AppOpenAdCommandProvider: CommandProvider {
-    
     var commands: [Command] {
         [
             .command(.appOpenAd(.show), showAppOpenAd),
@@ -22,19 +21,26 @@ final class AppOpenAdCommandProvider: CommandProvider {
     private let onDestroy: () -> Void
     private let ad: YMAAppOpenAd
     private var idCount = 0
+    private let appOpenAdController: AppOpenAdViewController
     
     let name = "appOpenAd"
     
-    init(ad: YMAAppOpenAd, onDestroy: @escaping () -> Void) {
+    init(
+        ad: YMAAppOpenAd,
+        onDestroy: @escaping () -> Void,
+        appOpenAdController: AppOpenAdViewController
+    ) {
         self.ad = ad
         self.onDestroy = onDestroy
+        self.appOpenAdController = appOpenAdController
     }
     
     private func showAppOpenAd(args: Any?, result: MethodCallResult) {
         guard let controller = Self.controller else {
             return result.error(.noViewController)
         }
-        ad.show(from: controller)
+        controller.present(appOpenAdController, animated: false)
+        ad.show(from: appOpenAdController)
         result.success()
     }
     

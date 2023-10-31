@@ -21,17 +21,17 @@ final class FullScreenAdCreator {
     }
     
     func createAppOpenAd(ad: YMAAppOpenAd) -> Int {
-        let delegate = AppOpenAdEventDelegate()
-        ad.delegate = delegate
-        return createAd(channelName: appOpenAdChannelName, delegate: delegate) {
-            AppOpenAdCommandProvider(ad: ad, onDestroy: $0)
+        let viewController = AppOpenAdViewController()
+        ad.delegate = viewController
+        return createAd(channelName: appOpenAdChannelName, streamHandler: viewController) {
+            AppOpenAdCommandProvider(ad: ad, onDestroy: $0, appOpenAdController: viewController)
         }
     }
 
     func createInterstitialAd(ad: YMAInterstitialAd) -> Int {
         let delegate = InterstitialAdEventDelegate()
         ad.delegate = delegate
-        return createAd(channelName: interstitialAdChannelName, delegate: delegate) {
+        return createAd(channelName: interstitialAdChannelName, streamHandler: delegate) {
             InterstitialAdCommandProvider(ad: ad, onDestroy: $0)
         }
     }
@@ -39,14 +39,14 @@ final class FullScreenAdCreator {
     func createRewardedAd(ad: YMARewardedAd) -> Int {
         let delegate = RewardedAdEventDelegate()
         ad.delegate = delegate
-        return createAd(channelName: rewardedAdChannelName, delegate: delegate) {
+        return createAd(channelName: rewardedAdChannelName, streamHandler: delegate) {
             RewardedAdCommandProvider(ad: ad, onDestroy: $0)
         }
     }
     
     private func createAd(
         channelName: String,
-        delegate: FullScreenEventDelegate,
+        streamHandler: FlutterStreamHandler & NSObjectProtocol,
         providerFactory: (_ onDestroy: @escaping () -> Void) -> CommandProvider
     ) -> Int {
         let id = idCount
@@ -59,7 +59,7 @@ final class FullScreenAdCreator {
             eventChannel.setStreamHandler(nil)
         }
         methodChannel.setMethodCallHandler(provider.callHandler)
-        eventChannel.setStreamHandler(delegate)
+        eventChannel.setStreamHandler(streamHandler)
         return id
     }
     

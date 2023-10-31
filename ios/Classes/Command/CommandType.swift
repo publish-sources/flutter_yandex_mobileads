@@ -11,6 +11,7 @@ enum CommandType {
     case mobileAds(MobileAdsCommand)
     case createAdLoader(CreateAdLoaderCommand)
     case bannerAd(BannerAdCommand)
+    case bannerAdSize(BannerAdSizeCommand)
     case interstitialAd(InterstitialAdCommand)
     case rewardedAd(RewardedAdCommand)
     case appOpenAd(AppOpenAdCommand)
@@ -26,6 +27,8 @@ enum CommandType {
             return "createAdLoader"
         case .bannerAd:
             return "bannerAd"
+        case .bannerAdSize:
+            return "bannerAdSize"
         case .interstitialAd:
             return "interstitialAd"
         case .rewardedAd:
@@ -48,6 +51,8 @@ enum CommandType {
         case .createAdLoader(let command):
             return command.rawValue
         case .bannerAd(let command):
+            return command.rawValue
+        case .bannerAdSize(let command):
             return command.rawValue
         case .interstitialAd(let command):
             return command.rawValue
@@ -81,6 +86,10 @@ enum MobileAdsCommand: String {
 enum BannerAdCommand: String {
     case load
     case destroy
+}
+
+enum BannerAdSizeCommand: String {
+    case bannerAdSize
 }
 
 enum InterstitialAdCommand: String {

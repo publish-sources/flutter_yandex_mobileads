@@ -18,7 +18,6 @@ internal fun Map<String, Any?>.toAdRequestConfiguration(adUnitId: String) = AdRe
     (getValueOrNull<String>(GENDER))?.let(adRequestConfigurationBuilder::setGender)
     (getValueOrNull<Map<String, Double>>(LOCATION))?.toLocation()?.let(adRequestConfigurationBuilder::setLocation)
     (getValueOrNull<Map<String, String>>(PARAMETERS))?.let(adRequestConfigurationBuilder::setParameters)
-    (getValueOrNull<String>(BIDDING_DATA))?.let(adRequestConfigurationBuilder::setBiddingData)
     (getValueOrNull<String>(PREFERRED_THEME))?.toAdTheme()?.let(adRequestConfigurationBuilder::setPreferredTheme)
 }.build()
 
@@ -28,5 +27,4 @@ private const val CONTEXT_TAGS = "contextTags"
 private const val GENDER = "gender"
 private const val LOCATION = "location"
 private const val PARAMETERS = "parameters"
-private const val BIDDING_DATA = "biddingData"
 private const val PREFERRED_THEME = "preferredTheme"

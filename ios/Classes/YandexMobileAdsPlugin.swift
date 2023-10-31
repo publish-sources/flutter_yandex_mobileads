@@ -12,22 +12,28 @@ import UIKit
 import YandexMobileAds
 
 public final class YandexMobileAdsPlugin: NSObject, FlutterPlugin {
-
+    
     static let channelName = "yandex_mobileads"
-
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let factory = BannerAdViewFactory(messenger: registrar.messenger())
+        let bannerAdSizeFactory = BannerAdSizeFactory()
+        let factory = BannerAdViewFactory(
+            messenger: registrar.messenger(),
+            bannerAdSizeFactory: bannerAdSizeFactory
+        )
+        
         registrar.register(factory, withId: "<banner-ad>")
-
+        
         let commandProviders: [CommandProvider] = [
             MobileAdsCommandProvider(),
             CreateAdLoaderCommandProvider(messenger: registrar.messenger()),
+            GetCalculatedBannerAdSizeCommandProvider(bannerAdSizeFactory: bannerAdSizeFactory)
         ]
-
+        
         commandProviders.forEach { provider in
             FlutterMethodChannel(
-                    name: "\(channelName).\(provider.name)",
-                    binaryMessenger: registrar.messenger()
+                name: "\(channelName).\(provider.name)",
+                binaryMessenger: registrar.messenger()
             ).setMethodCallHandler(provider.callHandler)
         }
     }

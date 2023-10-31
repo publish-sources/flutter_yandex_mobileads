@@ -36,12 +36,62 @@ class BannerAdSize {
     required int width,
   }) : this._(width, _initialHeight, _AdSizeType.sticky);
 
-  /// Width in density-independent pixels (dp).
+  /// Given width in density-independent pixels (dp).
   final int width;
 
-  /// Height in density-independent pixels (dp).
+  /// Given height in density-independent pixels (dp).
   final int height;
   final _AdSizeType _type;
+
+  /// Returns the calculated size of this [BannerAdSize].
+  Future<CalculatedBannerAdSize> getCalculatedBannerAdSize() async {
+    return await _CalculatedBannerAdSizeProvider.getCalculatedBannerAdSize(
+        width, height, _type);
+  }
+
+  /// Returns the calculated width of this [BannerAdSize] in density-independent pixels (dp).
+  Future<int> getCalculatedWidth() async {
+    return (await getCalculatedBannerAdSize()).width;
+  }
+
+  /// Returns the calculated height of this [BannerAdSize] in density-independent pixels (dp).
+  Future<int> getCalculatedHeight() async {
+    return (await getCalculatedBannerAdSize()).height;
+  }
 }
 
 enum _AdSizeType { sticky, inline }
+
+class CalculatedBannerAdSize {
+  /// Actual width of the [BannerAdSize] in density-independent pixels (dp).
+  final int width;
+
+  /// Actual height of the [BannerAdSize] in density-independent pixels (dp).
+  final int height;
+
+  const CalculatedBannerAdSize(this.width, this.height);
+
+  @override
+  String toString() {
+    return 'CalculatedBannerAdSize{width: $width, height: $height}';
+  }
+}
+
+class _CalculatedBannerAdSizeProvider {
+  static const _createChannel = MethodChannel('yandex_mobileads.bannerAdSize');
+
+  static Future<CalculatedBannerAdSize> getCalculatedBannerAdSize(
+    int width,
+    int height,
+    _AdSizeType adSizeType,
+  ) async {
+    Map params = {"width": width, "height": height, "type": adSizeType.name};
+
+    Map? result = await _createChannel.invokeMethod("bannerAdSize", params);
+    if (result == null) {
+      throw ArgumentError('something went wrong while creating banner ad size');
+    }
+
+    return CalculatedBannerAdSize(result["width"], result["height"]);
+  }
+}

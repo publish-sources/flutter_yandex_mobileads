@@ -12,8 +12,10 @@ package com.yandex.mobile.ads.flutter
 import android.content.Context
 import com.yandex.mobile.ads.flutter.appopenad.command.CreateAppOpenAdLoaderCommandHandler
 import com.yandex.mobile.ads.flutter.banner.BannerAdViewFactory
+import com.yandex.mobile.ads.flutter.banner.banneadsize.command.GetCalculatedBannerAdSizeCommandHandler
 import com.yandex.mobile.ads.flutter.common.AdLoaderCreator
 import com.yandex.mobile.ads.flutter.common.CreateAdLoaderCommandHandlerProvider
+import com.yandex.mobile.ads.flutter.common.CreateBannerAdSizeCommandHandlerProvider
 import com.yandex.mobile.ads.flutter.common.FullScreenAdCreator
 import com.yandex.mobile.ads.flutter.common.MobileAdsCommandHandlerProvider
 import com.yandex.mobile.ads.flutter.common.command.MobileAdsCommand
@@ -40,7 +42,8 @@ class YandexMobileAdsPlugin : FlutterPlugin, ActivityAware {
 
         val providers = listOf(
             getMobileAdsCommandHandlerProvider(applicationContext),
-            getCreateAdLoaderHandlerProvider(activityContextHolder, binding.binaryMessenger)
+            getCreateAdLoaderHandlerProvider(activityContextHolder, binding.binaryMessenger),
+            getCreateBannerAdSizeHandlerProvider(activityContextHolder),
         )
 
         providers.forEach { provider ->
@@ -67,6 +70,16 @@ class YandexMobileAdsPlugin : FlutterPlugin, ActivityAware {
                 INTERSTITIAL_AD_LOADER to CreateInterstitialAdLoaderCommandHandler(activityContextHolder, adLoaderCreator, fullScreenAdCreator),
                 REWARDED_AD_LOADER to CreateRewardedAdLoaderCommandHandler(activityContextHolder, adLoaderCreator, fullScreenAdCreator),
                 APP_OPEN_AD_LOADER to CreateAppOpenAdLoaderCommandHandler(activityContextHolder, adLoaderCreator, fullScreenAdCreator),
+            )
+        )
+    }
+
+    private fun getCreateBannerAdSizeHandlerProvider(
+        activityContextHolder: ActivityContextHolder,
+    ): CreateBannerAdSizeCommandHandlerProvider {
+        return CreateBannerAdSizeCommandHandlerProvider(
+            mapOf(
+               BANNER_AD_SIZE to GetCalculatedBannerAdSizeCommandHandler(activityContextHolder)
             )
         )
     }
@@ -104,6 +117,8 @@ class YandexMobileAdsPlugin : FlutterPlugin, ActivityAware {
 
         const val ROOT = "yandex_mobileads"
         const val BANNER_VIEW_TYPE = "<banner-ad>"
+
+        const val BANNER_AD_SIZE = "bannerAdSize"
 
         const val INTERSTITIAL_AD_LOADER = "interstitialAdLoader"
         const val REWARDED_AD_LOADER = "rewardedAdLoader"
