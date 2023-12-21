@@ -11,68 +11,9 @@ import Flutter
 import YandexMobileAds
 import UIKit
 
-final class AppOpenAdViewController: UIViewController {
-    private let fullScreenEvendDelegate: FullScreenEventDelegate
-    
-    init(fullScreenEvendDelegate: FullScreenEventDelegate = FullScreenEventDelegate()) {
-        self.fullScreenEvendDelegate = fullScreenEvendDelegate
-        super.init(nibName: nil, bundle: nil)
-        modalPresentationStyle = .overCurrentContext
-    }
-    
-    required init?(coder: NSCoder) {
-        fullScreenEvendDelegate = FullScreenEventDelegate()
-        super.init(coder: coder)
-        modalPresentationStyle = .overCurrentContext
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard self.presentedViewController == nil else {
-            return
-        }
-        super.touchesBegan(touches, with: event)
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard self.presentedViewController == nil else {
-            return
-        }
-        super.touchesMoved(touches, with: event)
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard self.presentedViewController == nil else {
-            return
-        }
-        super.touchesEnded(touches, with: event)
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard self.presentedViewController == nil else {
-            return
-        }
-        super.touchesCancelled(touches, with: event)
-    }
-}
-
-// MARK: FlutterStreamHandler
-
-extension AppOpenAdViewController: FlutterStreamHandler {
-    func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-        fullScreenEvendDelegate.onListen(withArguments: arguments, eventSink: events)
-    }
-    
-    func onCancel(withArguments arguments: Any?) -> FlutterError? {
-        fullScreenEvendDelegate.onCancel(withArguments: arguments)
-    }
-}
-
-// MARK: YMAAppOpenAdDelegate
-
-extension AppOpenAdViewController: YMAAppOpenAdDelegate {
+final class AppOpenAdViewController: BaseFullscreenAdViewController, YMAAppOpenAdDelegate {
     func appOpenAd(_ interstitialAd: YMAAppOpenAd, didFailToShowWithError error: Error) {
-        dismiss(animated: false)
-        fullScreenEvendDelegate.respond(.onAdFailedToShow, error.toMap())
+        super.adDidFailToShow(error)
     }
     
     func appOpenAdDidShow(_ interstitialAd: YMAAppOpenAd) {
@@ -80,8 +21,7 @@ extension AppOpenAdViewController: YMAAppOpenAdDelegate {
     }
     
     func appOpenAdDidDismiss(_ interstitialAd: YMAAppOpenAd) {
-        dismiss(animated: false)
-        fullScreenEvendDelegate.respond(.onAdDismissed)
+        super.adDidDismiss()
     }
     
     func appOpenAdDidClick(_ ad: YMAAppOpenAd) {

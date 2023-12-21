@@ -9,29 +9,28 @@
 
 import YandexMobileAds
 
-final class RewardedAdEventDelegate: FullScreenEventDelegate, YMARewardedAdDelegate {
-    
+final class RewardedAdViewController: BaseFullscreenAdViewController, YMARewardedAdDelegate {
     func rewardedAd(_ rewardedAd: YMARewardedAd, didReward reward: YMAReward) {
-        respond(.onRewarded, ["type": reward.type, "amount": reward.amount])
+        fullScreenEvendDelegate.respond(.onRewarded, ["type": reward.type, "amount": reward.amount])
     }
     
     func rewardedAd(_ rewardedAd: YMARewardedAd, didFailToShowWithError error: Error) {
-        respond(.onAdFailedToShow, error.toMap())
+        super.adDidFailToShow(error)
     }
     
     func rewardedAdDidShow(_ rewardedAd: YMARewardedAd) {
-        respond(.onAdShown)
+        fullScreenEvendDelegate.respond(.onAdShown)
     }
     
     func rewardedAdDidDismiss(_ rewardedAd: YMARewardedAd) {
-        respond(.onAdDismissed)
+        super.adDidDismiss()
     }
 
     func rewardedAdDidClick(_ ad: YMARewardedAd) {
-        respond(.onAdClicked)
+        fullScreenEvendDelegate.respond(.onAdClicked)
     }
 
     func rewardedAd(_ ad: YMARewardedAd, didTrackImpressionWith impressionData: YMAImpressionData?) {
-        respond(.onAdImpression, ["impressionData": impressionData?.rawData])
+        fullScreenEvendDelegate.respond(.onAdImpression, ["impressionData": impressionData?.rawData])
     }
 }

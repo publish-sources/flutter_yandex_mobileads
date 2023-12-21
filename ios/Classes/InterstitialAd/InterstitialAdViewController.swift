@@ -9,26 +9,24 @@
 
 import YandexMobileAds
 
-final class InterstitialAdEventDelegate: FullScreenEventDelegate, YMAInterstitialAdDelegate {
-
+final class InterstitialAdViewController: BaseFullscreenAdViewController, YMAInterstitialAdDelegate {
     func interstitialAd(_ interstitialAd: YMAInterstitialAd, didFailToShowWithError error: Error) {
-        respond(.onAdFailedToShow, error.toMap())
+        super.adDidFailToShow(error)
     }
     
     func interstitialAdDidShow(_ interstitialAd: YMAInterstitialAd) {
-        respond(.onAdShown)
+        fullScreenEvendDelegate.respond(.onAdShown)
     }
     
     func interstitialAdDidDismiss(_ interstitialAd: YMAInterstitialAd) {
-        respond(.onAdDismissed)
+        super.adDidDismiss()
     }
     
-    
     func interstitialAdDidClick(_ ad: YMAInterstitialAd) {
-        respond(.onAdClicked)
+        fullScreenEvendDelegate.respond(.onAdClicked)
     }
 
     func interstitialAd(_ ad: YMAInterstitialAd, didTrackImpressionWith impressionData: YMAImpressionData?) {
-        respond(.onAdImpression, ["impressionData": impressionData?.rawData])
+        fullScreenEvendDelegate.respond(.onAdImpression, ["impressionData": impressionData?.rawData])
     }
 }

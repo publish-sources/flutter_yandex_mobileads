@@ -22,19 +22,26 @@ final class InterstitialAdCommandProvider: CommandProvider {
     private let onDestroy: () -> Void
     private let ad: YMAInterstitialAd
     private var idCount = 0
+    private let interstitialAdViewController: InterstitialAdViewController
 
     let name = "interstitialAd"
 
-    init(ad: YMAInterstitialAd, onDestroy: @escaping () -> Void) {
+    init(
+        ad: YMAInterstitialAd,
+        onDestroy: @escaping () -> Void,
+        interstitialAdViewController: InterstitialAdViewController
+    ) {
         self.ad = ad
         self.onDestroy = onDestroy
+        self.interstitialAdViewController = interstitialAdViewController
     }
 
     private func showInterstitialAd(args: Any?, result: MethodCallResult) {
         guard let controller = Self.controller else {
             return result.error(.noViewController)
         }
-        ad.show(from: controller)
+        controller.present(interstitialAdViewController, animated: false)
+        ad.show(from: interstitialAdViewController)
         result.success()
     }
 

@@ -22,19 +22,26 @@ final class RewardedAdCommandProvider: CommandProvider {
     private let onDestroy: () -> Void
     private let ad: YMARewardedAd
     private var idCount = 0
+    private let rewardedAdViewController: RewardedAdViewController
 
     let name = "rewardedAd"
 
-    init(ad: YMARewardedAd, onDestroy: @escaping () -> Void) {
+    init(
+        ad: YMARewardedAd,
+        onDestroy: @escaping () -> Void,
+        rewardedAdViewController: RewardedAdViewController
+    ) {
         self.ad = ad
         self.onDestroy = onDestroy
+        self.rewardedAdViewController = rewardedAdViewController
     }
 
     private func showRewardedAd(args: Any?, result: MethodCallResult) {
         guard let controller = Self.controller else {
             return result.error(.noViewController)
         }
-        ad.show(from: controller)
+        controller.present(rewardedAdViewController, animated: false)
+        ad.show(from: rewardedAdViewController)
         result.success()
     }
 

@@ -23,30 +23,30 @@ final class FullScreenAdCreator {
     func createAppOpenAd(ad: YMAAppOpenAd) -> Int {
         let viewController = AppOpenAdViewController()
         ad.delegate = viewController
-        return createAd(channelName: appOpenAdChannelName, streamHandler: viewController) {
-            AppOpenAdCommandProvider(ad: ad, onDestroy: $0, appOpenAdController: viewController)
+        return createAd(channelName: appOpenAdChannelName, viewController: viewController) {
+            AppOpenAdCommandProvider(ad: ad, onDestroy: $0, appOpenAdViewController: viewController)
         }
     }
 
     func createInterstitialAd(ad: YMAInterstitialAd) -> Int {
-        let delegate = InterstitialAdEventDelegate()
-        ad.delegate = delegate
-        return createAd(channelName: interstitialAdChannelName, streamHandler: delegate) {
-            InterstitialAdCommandProvider(ad: ad, onDestroy: $0)
+        let viewController = InterstitialAdViewController()
+        ad.delegate = viewController
+        return createAd(channelName: interstitialAdChannelName, viewController: viewController) {
+            InterstitialAdCommandProvider(ad: ad, onDestroy: $0, interstitialAdViewController: viewController)
         }
     }
 
     func createRewardedAd(ad: YMARewardedAd) -> Int {
-        let delegate = RewardedAdEventDelegate()
-        ad.delegate = delegate
-        return createAd(channelName: rewardedAdChannelName, streamHandler: delegate) {
-            RewardedAdCommandProvider(ad: ad, onDestroy: $0)
+        let viewController = RewardedAdViewController()
+        ad.delegate = viewController
+        return createAd(channelName: rewardedAdChannelName, viewController: viewController) {
+            RewardedAdCommandProvider(ad: ad, onDestroy: $0, rewardedAdViewController: viewController)
         }
     }
     
     private func createAd(
         channelName: String,
-        streamHandler: FlutterStreamHandler & NSObjectProtocol,
+        viewController: BaseFullscreenAdViewController & NSObjectProtocol,
         providerFactory: (_ onDestroy: @escaping () -> Void) -> CommandProvider
     ) -> Int {
         let id = idCount
@@ -59,7 +59,7 @@ final class FullScreenAdCreator {
             eventChannel.setStreamHandler(nil)
         }
         methodChannel.setMethodCallHandler(provider.callHandler)
-        eventChannel.setStreamHandler(streamHandler)
+        eventChannel.setStreamHandler(viewController)
         return id
     }
     
