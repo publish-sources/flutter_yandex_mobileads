@@ -7,7 +7,7 @@
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
  */
 
-part of yandex_mobileads;
+part of 'mobile_ads.dart';
 
 /// An AdRequest contains targeting information used to fetch an ad.
 class AdRequest {

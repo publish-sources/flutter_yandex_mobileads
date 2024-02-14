@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'yandex_mobileads'
-  s.version          = '6.2.0'
+  s.version          = '6.3.0'
   s.summary          = 'Flutter plugin for Yandex Mobile Ads SDK'
   s.description      = <<-DESC
 Flutter plugin for Yandex Mobile Ads SDK
@@ -20,7 +20,7 @@ Flutter plugin for Yandex Mobile Ads SDK
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'YandexMobileAds', '~> 6.3.0'
+  s.dependency 'YandexMobileAds', '~> 6.4.0'
   s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.

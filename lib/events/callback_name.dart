@@ -7,7 +7,7 @@
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
  */
 
-part of yandex_mobileads;
+part of '../mobile_ads.dart';
 
 enum _CallbackName {
   /// Notifies that the ad loaded successfully.

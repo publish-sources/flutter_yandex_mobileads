@@ -7,7 +7,7 @@
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
  */
 
-part of yandex_mobileads;
+part of '../mobile_ads.dart';
 
 /// This class is responsible for listen interstitial ad events.
 /// Should be set to [RewardedAd] before ad showing.

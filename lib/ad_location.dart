@@ -7,7 +7,7 @@
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
  */
 
-part of yandex_mobileads;
+part of 'mobile_ads.dart';
 
 /// An AdLocation contains information about user location.
 class AdLocation {

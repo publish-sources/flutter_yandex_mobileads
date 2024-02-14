@@ -7,7 +7,7 @@
  * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
  */
 
-part of yandex_mobileads;
+part of 'mobile_ads.dart';
 
 /// An AdInfo contains information about ad size and unit id.
 class AdInfo {
