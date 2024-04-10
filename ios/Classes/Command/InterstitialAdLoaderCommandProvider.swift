@@ -11,7 +11,7 @@ import Flutter
 import YandexMobileAds
 
 final class InterstitialAdLoaderCommandProvider: CommandProvider {
-    
+
     var commands: [Command] {
         [
             .command(.interstitialAdLoader(.load), loadInterstitialAd),
@@ -19,18 +19,18 @@ final class InterstitialAdLoaderCommandProvider: CommandProvider {
             .command(.interstitialAdLoader(.destroy), destroyInterstitialAdLoader),
         ]
     }
-    
+
     private let onDestroy: () -> Void
-    private let adLoader: YMAInterstitialAdLoader
+    private let adLoader: InterstitialAdLoader
     private var idCount = 0
-    
+
     let name = "interstitialAdLoader"
-    
-    init(adLoader: YMAInterstitialAdLoader, onDestroy: @escaping () -> Void) {
+
+    init(adLoader: InterstitialAdLoader, onDestroy: @escaping () -> Void) {
         self.adLoader = adLoader
         self.onDestroy = onDestroy
     }
-    
+
     private func loadInterstitialAd(args: Any?, result: MethodCallResult) {
         guard let args = args as? [String: Any?] else {
             return result.error(.argsIsNotMap)
@@ -39,12 +39,12 @@ final class InterstitialAdLoaderCommandProvider: CommandProvider {
         adLoader.loadAd(with: args.toAdRequestConfiguration(adUnitID: adUnitID))
         result.success()
     }
-    
+
     private func cancelLoading(args: Any?, result: MethodCallResult) {
         adLoader.cancelLoading()
         result.success()
     }
-    
+
     private func destroyInterstitialAdLoader(args: Any?, result: MethodCallResult) {
         onDestroy()
         result.success()

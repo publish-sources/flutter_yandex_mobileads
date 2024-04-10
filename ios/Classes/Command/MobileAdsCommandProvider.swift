@@ -14,6 +14,7 @@ final class MobileAdsCommandProvider: CommandProvider {
 
     var commands: [Command] {
         [
+            .command(.mobileAds(.initialize), initialize),
             .command(.mobileAds(.enableLogging), enableLogging),
             .command(.mobileAds(.enableDebugErrorIndicator), enableDebugErrorIndicator),
             .command(.mobileAds(.setLocationConsent), setLocationConsent),
@@ -23,14 +24,20 @@ final class MobileAdsCommandProvider: CommandProvider {
 
     let name = "mobileAds"
 
+    private func initialize(args: Any?, result: MethodCallResult) {
+        MobileAds.initializeSDK {
+            result.success()
+        }
+    }
+
     private func enableLogging(args: Any?, result: MethodCallResult) {
-        YMAMobileAds.enableLogging()
+        MobileAds.enableLogging()
         result.success()
     }
 
     private func enableDebugErrorIndicator(args: Any?, result: MethodCallResult) {
-        YMAMobileAds.enableVisibilityErrorIndicator(for: .hardware)
-        YMAMobileAds.enableVisibilityErrorIndicator(for: .simulator)
+        MobileAds.enableVisibilityErrorIndicator(for: .hardware)
+        MobileAds.enableVisibilityErrorIndicator(for: .simulator)
         result.success()
     }
 
@@ -38,7 +45,7 @@ final class MobileAdsCommandProvider: CommandProvider {
         guard let value = args as? Bool else {
             return result.error(.argsIsNotBool)
         }
-        YMAMobileAds.setLocationTrackingEnabled(value)
+        MobileAds.setLocationTrackingEnabled(value)
         result.success()
     }
 
@@ -46,7 +53,7 @@ final class MobileAdsCommandProvider: CommandProvider {
         guard let value = args as? Bool else {
             return result.error(.argsIsNotBool)
         }
-        YMAMobileAds.setUserConsent(value)
+        MobileAds.setUserConsent(value)
         result.success()
     }
 }

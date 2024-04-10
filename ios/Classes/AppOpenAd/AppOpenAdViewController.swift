@@ -11,24 +11,24 @@ import Flutter
 import YandexMobileAds
 import UIKit
 
-final class AppOpenAdViewController: BaseFullscreenAdViewController, YMAAppOpenAdDelegate {
-    func appOpenAd(_ interstitialAd: YMAAppOpenAd, didFailToShowWithError error: Error) {
+final class AppOpenAdViewController: BaseFullscreenAdViewController, AppOpenAdDelegate {
+    func appOpenAd(_ interstitialAd: AppOpenAd, didFailToShowWithError error: Error) {
         super.adDidFailToShow(error)
     }
-    
-    func appOpenAdDidShow(_ interstitialAd: YMAAppOpenAd) {
+
+    func appOpenAdDidShow(_ interstitialAd: AppOpenAd) {
         fullScreenEvendDelegate.respond(.onAdShown)
     }
-    
-    func appOpenAdDidDismiss(_ interstitialAd: YMAAppOpenAd) {
+
+    func appOpenAdDidDismiss(_ interstitialAd: AppOpenAd) {
         super.adDidDismiss()
     }
-    
-    func appOpenAdDidClick(_ ad: YMAAppOpenAd) {
+
+    func appOpenAdDidClick(_ ad: AppOpenAd) {
         fullScreenEvendDelegate.respond(.onAdClicked)
     }
 
-    func appOpenAd(_ ad: YMAAppOpenAd, didTrackImpressionWith impressionData: YMAImpressionData?) {
+    func appOpenAd(_ ad: AppOpenAd, didTrackImpressionWith impressionData: ImpressionData?) {
         fullScreenEvendDelegate.respond(.onAdImpression, ["impressionData": impressionData?.rawData])
     }
 }

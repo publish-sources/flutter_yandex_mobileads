@@ -15,7 +15,8 @@ enum class MobileAdsCommand(val command: String) {
     ENABLE_DEBUG_ERROR_INDICATOR("enableDebugErrorIndicator"),
     SET_LOCATION_CONSENT("setLocationConsent"),
     SET_USER_CONSENT("setUserConsent"),
-    SET_AGE_RESTRICTED_USER("setAgeRestrictedUser");
+    SET_AGE_RESTRICTED_USER("setAgeRestrictedUser"),
+    SHOW_DEBUG_PANEL("showDebugPanel");
 
     companion object {
 

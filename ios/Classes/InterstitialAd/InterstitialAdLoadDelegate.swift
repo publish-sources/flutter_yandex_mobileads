@@ -9,20 +9,20 @@
 
 import YandexMobileAds
 
-final class InterstititalAdLoadDelegate: LoadDelegate, YMAInterstitialAdLoaderDelegate {
-    
+final class InterstititalAdLoadDelegate: LoadDelegate, InterstitialAdLoaderDelegate {
+
     private let adCreator: FullScreenAdCreator
-    
+
     init(adCreator: FullScreenAdCreator) {
         self.adCreator = adCreator
     }
-    
-    func interstitialAdLoader(_ adLoader: YMAInterstitialAdLoader, didLoad interstitialAd: YMAInterstitialAd) {
+
+    func interstitialAdLoader(_ adLoader: InterstitialAdLoader, didLoad interstitialAd: InterstitialAd) {
         let id = adCreator.createInterstitialAd(ad: interstitialAd)
         respond(.onAdLoaded, ["id" : id, "adInfo" : adInfoToMap(adInfo: interstitialAd.adInfo)])
     }
-    
-    func interstitialAdLoader(_ adLoader: YMAInterstitialAdLoader, didFailToLoadWithError error: YMAAdRequestError) {
+
+    func interstitialAdLoader(_ adLoader: InterstitialAdLoader, didFailToLoadWithError error: AdRequestError) {
         let errorMap = error.error.toMap()
         respond(.onAdFailedToLoad, ["adUnitId": error.adUnitId, "code": errorMap["code"] ?? 1, "description": errorMap["description"] ?? ""])
     }

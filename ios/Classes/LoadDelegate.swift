@@ -29,16 +29,16 @@ class LoadDelegate: NSObject, FlutterStreamHandler {
         sink = nil
         return nil
     }
-    
-    func adInfoToMap(adInfo: YMAAdInfo?) -> [String: Any] {
+
+    func adInfoToMap(adInfo: AdInfo?) -> [String: Any] {
         if let info = adInfo {
             return ["adUnitId" : info.adUnitId, "adSize" : adSizeToMap(adSize: info.adSize)]
         } else {
             return [:]
         }
     }
-    
-    private func adSizeToMap(adSize: YMAAdSize?) -> [String: Any] {
+
+    private func adSizeToMap(adSize: AdSize?) -> [String: Any] {
         if let size = adSize {
             return ["width" : size.width, "height" : size.height]
         } else {

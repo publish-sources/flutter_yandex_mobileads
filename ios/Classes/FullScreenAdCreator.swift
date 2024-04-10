@@ -19,8 +19,8 @@ final class FullScreenAdCreator {
     init(messenger: FlutterBinaryMessenger) {
         self.messenger = messenger
     }
-    
-    func createAppOpenAd(ad: YMAAppOpenAd) -> Int {
+
+    func createAppOpenAd(ad: AppOpenAd) -> Int {
         let viewController = AppOpenAdViewController()
         ad.delegate = viewController
         return createAd(channelName: appOpenAdChannelName, viewController: viewController) {
@@ -28,7 +28,7 @@ final class FullScreenAdCreator {
         }
     }
 
-    func createInterstitialAd(ad: YMAInterstitialAd) -> Int {
+    func createInterstitialAd(ad: InterstitialAd) -> Int {
         let viewController = InterstitialAdViewController()
         ad.delegate = viewController
         return createAd(channelName: interstitialAdChannelName, viewController: viewController) {
@@ -36,14 +36,14 @@ final class FullScreenAdCreator {
         }
     }
 
-    func createRewardedAd(ad: YMARewardedAd) -> Int {
+    func createRewardedAd(ad: RewardedAd) -> Int {
         let viewController = RewardedAdViewController()
         ad.delegate = viewController
         return createAd(channelName: rewardedAdChannelName, viewController: viewController) {
             RewardedAdCommandProvider(ad: ad, onDestroy: $0, rewardedAdViewController: viewController)
         }
     }
-    
+
     private func createAd(
         channelName: String,
         viewController: BaseFullscreenAdViewController & NSObjectProtocol,
@@ -62,9 +62,8 @@ final class FullScreenAdCreator {
         eventChannel.setStreamHandler(viewController)
         return id
     }
-    
+
     private let appOpenAdChannelName = "appOpenAd"
     private let interstitialAdChannelName = "interstitialAd"
     private let rewardedAdChannelName = "rewardedAd"
 }
-

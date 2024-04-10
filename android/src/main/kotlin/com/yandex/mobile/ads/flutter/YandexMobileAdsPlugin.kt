@@ -85,9 +85,11 @@ class YandexMobileAdsPlugin : FlutterPlugin, ActivityAware {
     }
 
     private fun getMobileAdsCommandHandlerProvider(
-        context: Context,
+        applicationContext: Context,
     ): MobileAdsCommandHandlerProvider {
-        val mobileAdsCommandHandler = MobileAdsCommandHandler(context)
+        val mobileAdsCommandHandler = MobileAdsCommandHandler(
+            applicationContext, activityContextHolder
+        )
         return MobileAdsCommandHandlerProvider(
             MobileAdsCommand.values().associate { mobileAdsCommand ->
                 mobileAdsCommand.command to mobileAdsCommandHandler

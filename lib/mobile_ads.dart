@@ -60,7 +60,7 @@ class MobileAds {
   static var _ageRestrictedUser = false;
 
   /// Returns the plugin version as a string.
-  static const pluginVersion = '6.3.0';
+  static const pluginVersion = '7.0.0';
 
   /// A private constructor to prevent instancing.
   /// Using it inside the library won't be useful.
@@ -113,6 +113,12 @@ class MobileAds {
   /// Initializes the Mobile Ads SDK.
   /// Call this in the `initState` method of your app widget.
   static Future<void> initialize() async {
-    await _PlatformInterface.instance.initialize(_channel);
+    await _channel.invokeMethod('initialize');
+  }
+
+  /// Shows Debug Panel.
+  /// Available only for Android. It will do nothing on iOS.
+  static Future<void> showDebugPanel() async {
+    await _channel.invokeMethod("showDebugPanel");
   }
 }

@@ -77,6 +77,7 @@ enum CreateAdLoaderCommand: String {
 }
 
 enum MobileAdsCommand: String {
+    case initialize
     case enableLogging
     case enableDebugErrorIndicator
     case setLocationConsent

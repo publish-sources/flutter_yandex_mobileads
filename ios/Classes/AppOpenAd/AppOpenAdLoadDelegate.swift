@@ -9,20 +9,20 @@
 
 import YandexMobileAds
 
-final class AppOpenAdLoadDelegate: LoadDelegate, YMAAppOpenAdLoaderDelegate {
-    
+final class AppOpenAdLoadDelegate: LoadDelegate, AppOpenAdLoaderDelegate {
+
     private let adCreator: FullScreenAdCreator
-    
+
     init(adCreator: FullScreenAdCreator) {
         self.adCreator = adCreator
     }
-    
-    func appOpenAdLoader(_ adLoader: YMAAppOpenAdLoader, didLoad appOpenAd: YMAAppOpenAd) {
+
+    func appOpenAdLoader(_ adLoader: AppOpenAdLoader, didLoad appOpenAd: AppOpenAd) {
         let id = adCreator.createAppOpenAd(ad: appOpenAd)
         respond(.onAdLoaded, ["id" : id, "adInfo" : adInfoToMap(adInfo:appOpenAd.adInfo)])
     }
-    
-    func appOpenAdLoader(_ adLoader: YMAAppOpenAdLoader, didFailToLoadWithError error: YMAAdRequestError) {
+
+    func appOpenAdLoader(_ adLoader: AppOpenAdLoader, didFailToLoadWithError error: AdRequestError) {
         let errorMap = error.error.toMap()
         respond(.onAdFailedToLoad, ["adUnitId": error.adUnitId, "code": errorMap["code"] ?? 1, "description": errorMap["description"] ?? ""])
     }

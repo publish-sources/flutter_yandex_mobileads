@@ -24,8 +24,6 @@ abstract class _PlatformInterface {
     }
   }
 
-  Future<void> initialize(MethodChannel channel);
-
   Future<void> setAgeRestrictedUser(MethodChannel channel, bool value);
 
   Widget buildBannerAd({

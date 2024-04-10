@@ -11,9 +11,6 @@ part of '../mobile_ads.dart';
 
 class _IosInterface implements _PlatformInterface {
   @override
-  Future<void> initialize(MethodChannel channel) async {}
-
-  @override
   Future<void> setAgeRestrictedUser(MethodChannel channel, bool value) async {}
 
   @override

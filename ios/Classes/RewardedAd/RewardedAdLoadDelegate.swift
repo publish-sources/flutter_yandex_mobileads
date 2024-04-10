@@ -9,20 +9,20 @@
 
 import YandexMobileAds
 
-final class RewardedAdLoadDelegate: LoadDelegate, YMARewardedAdLoaderDelegate {
-    
+final class RewardedAdLoadDelegate: LoadDelegate, RewardedAdLoaderDelegate {
+
     private let adCreator: FullScreenAdCreator
-    
+
     init(adCreator: FullScreenAdCreator) {
         self.adCreator = adCreator
     }
-    
-    func rewardedAdLoader(_ adLoader: YMARewardedAdLoader, didLoad rewardedAd: YMARewardedAd) {
+
+    func rewardedAdLoader(_ adLoader: RewardedAdLoader, didLoad rewardedAd: RewardedAd) {
         let id = adCreator.createRewardedAd(ad: rewardedAd)
         respond(.onAdLoaded, ["id" : id, "adInfo" : adInfoToMap(adInfo: rewardedAd.adInfo)])
     }
-    
-    func rewardedAdLoader(_ adLoader: YMARewardedAdLoader, didFailToLoadWithError error: YMAAdRequestError) {
+
+    func rewardedAdLoader(_ adLoader: RewardedAdLoader, didFailToLoadWithError error: AdRequestError) {
         let errorMap = error.error.toMap()
         respond(.onAdFailedToLoad, ["adUnitId": error.adUnitId, "code": errorMap["code"] ?? 1, "description": errorMap["description"] ?? ""])
     }

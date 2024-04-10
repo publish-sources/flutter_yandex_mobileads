@@ -21,12 +21,12 @@ final class RewardedAdLoaderCommandProvider: CommandProvider {
     }
 
     private let onDestroy: () -> Void
-    private let adLoader: YMARewardedAdLoader
+    private let adLoader: RewardedAdLoader
     private var idCount = 0
 
     let name = "rewardedAdLoader"
 
-    init(adLoader: YMARewardedAdLoader, onDestroy: @escaping () -> Void) {
+    init(adLoader: RewardedAdLoader, onDestroy: @escaping () -> Void) {
         self.adLoader = adLoader
         self.onDestroy = onDestroy
     }
@@ -39,7 +39,7 @@ final class RewardedAdLoaderCommandProvider: CommandProvider {
         adLoader.loadAd(with: args.toAdRequestConfiguration(adUnitID: adUnitID))
         result.success()
     }
-    
+
     private func cancelLoading(args: Any?, result: MethodCallResult) {
         adLoader.cancelLoading()
         result.success()

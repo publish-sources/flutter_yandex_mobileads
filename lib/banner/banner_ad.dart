@@ -76,9 +76,9 @@ class AdWidget extends StatefulWidget {
   final BannerAd bannerAd;
 
   const AdWidget({
-    Key? key,
+    super.key,
     required this.bannerAd,
-  }) : super(key: key);
+  });
 
   @override
   State<AdWidget> createState() => _AdWidgetState();

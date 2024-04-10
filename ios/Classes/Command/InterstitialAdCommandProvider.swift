@@ -20,14 +20,14 @@ final class InterstitialAdCommandProvider: CommandProvider {
     }
 
     private let onDestroy: () -> Void
-    private let ad: YMAInterstitialAd
+    private let ad: InterstitialAd
     private var idCount = 0
     private let interstitialAdViewController: InterstitialAdViewController
 
     let name = "interstitialAd"
 
     init(
-        ad: YMAInterstitialAd,
+        ad: InterstitialAd,
         onDestroy: @escaping () -> Void,
         interstitialAdViewController: InterstitialAdViewController
     ) {

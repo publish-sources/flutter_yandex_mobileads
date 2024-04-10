@@ -11,7 +11,7 @@ import Flutter
 import YandexMobileAds
 
 final class CreateAdLoaderCommandProvider: CommandProvider {
-    
+
     let messenger: FlutterBinaryMessenger
     var commands: [Command] {
         [
@@ -20,17 +20,17 @@ final class CreateAdLoaderCommandProvider: CommandProvider {
             .command(.createAdLoader(.appOpenAdLoader), createAppOpenAdLoader),
         ]
     }
-    
+
     private var idCount = 0
-    
+
     let name = "createAdLoader"
-    
+
     init(messenger: FlutterBinaryMessenger) {
         self.messenger = messenger
     }
-    
+
     private func createAppOpenAdLoader(args: Any?, result: MethodCallResult) {
-        let adLoader = YMAAppOpenAdLoader()
+        let adLoader = AppOpenAdLoader()
         let adCreator = FullScreenAdCreator(messenger: messenger)
         let delegate = AppOpenAdLoadDelegate(adCreator: adCreator)
         adLoader.delegate = delegate
@@ -40,9 +40,9 @@ final class CreateAdLoaderCommandProvider: CommandProvider {
             AppOpenAdLoaderCommandProvider(adLoader: adLoader, onDestroy: $0)
         }
     }
-    
+
     private func createInterstitialAdLoader(args: Any?, result: MethodCallResult) {
-        let adLoader = YMAInterstitialAdLoader()
+        let adLoader = InterstitialAdLoader()
         let adCreator = FullScreenAdCreator(messenger: messenger)
         let delegate = InterstititalAdLoadDelegate(adCreator: adCreator)
         adLoader.delegate = delegate
@@ -50,9 +50,9 @@ final class CreateAdLoaderCommandProvider: CommandProvider {
             InterstitialAdLoaderCommandProvider(adLoader: adLoader, onDestroy: $0)
         }
     }
-    
+
     private func createRewardedAdLoader(args: Any?, result: MethodCallResult) {
-        let adLoader = YMARewardedAdLoader()
+        let adLoader = RewardedAdLoader()
         let adCreator = FullScreenAdCreator(messenger: messenger)
         let delegate = RewardedAdLoadDelegate(adCreator: adCreator)
         adLoader.delegate = delegate
@@ -60,7 +60,7 @@ final class CreateAdLoaderCommandProvider: CommandProvider {
             RewardedAdLoaderCommandProvider(adLoader: adLoader, onDestroy: $0)
         }
     }
-    
+
     private func createAdLoader(
         result: MethodCallResult,
         channelName: String,
@@ -80,7 +80,7 @@ final class CreateAdLoaderCommandProvider: CommandProvider {
         eventChannel.setStreamHandler(delegate)
         result.success(id)
     }
-    
+
     private let appOpenAdLoaderChannelName = "appOpenAdLoader"
     private let interstitialAdLoaderChannelName = "interstitialAdLoader"
     private let rewardedAdLoaderChannelName = "rewardedAdLoader"

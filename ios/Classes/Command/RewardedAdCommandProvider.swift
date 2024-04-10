@@ -20,14 +20,14 @@ final class RewardedAdCommandProvider: CommandProvider {
     }
 
     private let onDestroy: () -> Void
-    private let ad: YMARewardedAd
+    private let ad: RewardedAd
     private var idCount = 0
     private let rewardedAdViewController: RewardedAdViewController
 
     let name = "rewardedAd"
 
     init(
-        ad: YMARewardedAd,
+        ad: RewardedAd,
         onDestroy: @escaping () -> Void,
         rewardedAdViewController: RewardedAdViewController
     ) {

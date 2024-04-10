@@ -10,27 +10,27 @@
 import Flutter
 import YandexMobileAds
 
-final class BannerAdEventDelegate: EventDelegate, YMAAdViewDelegate {
+final class BannerAdEventDelegate: EventDelegate, AdViewDelegate {
 
-    func adViewDidLoad(_ adView: YMAAdView) {
+    func adViewDidLoad(_ adView: AdView) {
         let width = Int(adView.adContentSize().width)
         let height = Int(adView.adContentSize().height)
         respond(.onAdLoaded, ["width": width, "height": height])
     }
 
-    func adViewDidFailLoading(_ adView: YMAAdView, error: Error) {
+    func adViewDidFailLoading(_ adView: AdView, error: Error) {
         respond(.onAdFailedToLoad, error.toMap())
     }
 
-    func adViewDidClick(_ adView: YMAAdView) {
+    func adViewDidClick(_ adView: AdView) {
         respond(.onAdClicked)
     }
 
-    func adViewWillLeaveApplication(_ adView: YMAAdView) {
+    func adViewWillLeaveApplication(_ adView: AdView) {
         respond(.onLeftApplication)
     }
 
-    func adView(_ adView: YMAAdView, didTrackImpressionWith impressionData: YMAImpressionData?) {
+    func adView(_ adView: AdView, didTrackImpressionWith impressionData: ImpressionData?) {
         respond(.onImpression, ["impressionData": impressionData?.rawData])
     }
 }

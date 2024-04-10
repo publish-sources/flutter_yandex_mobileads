@@ -11,7 +11,7 @@ import Flutter
 import YandexMobileAds
 
 final class AppOpenAdLoaderCommandProvider: CommandProvider {
-    
+
     var commands: [Command] {
         [
             .command(.appOpenAdLoader(.load), loadAppOpenAd),
@@ -19,18 +19,18 @@ final class AppOpenAdLoaderCommandProvider: CommandProvider {
             .command(.appOpenAdLoader(.destroy), destroyAppOpenAdLoader),
         ]
     }
-    
+
     private let onDestroy: () -> Void
-    private let adLoader: YMAAppOpenAdLoader
+    private let adLoader: AppOpenAdLoader
     private var idCount = 0
-    
+
     let name = "appOpenAdLoader"
-    
-    init(adLoader: YMAAppOpenAdLoader, onDestroy: @escaping () -> Void) {
+
+    init(adLoader: AppOpenAdLoader, onDestroy: @escaping () -> Void) {
         self.adLoader = adLoader
         self.onDestroy = onDestroy
     }
-    
+
     private func loadAppOpenAd(args: Any?, result: MethodCallResult) {
         guard let args = args as? [String: Any?] else {
             return result.error(.argsIsNotMap)
@@ -39,12 +39,12 @@ final class AppOpenAdLoaderCommandProvider: CommandProvider {
         adLoader.loadAd(with: args.toAdRequestConfiguration(adUnitID: adUnitID))
         result.success()
     }
-    
+
     private func cancelLoading(args: Any?, result: MethodCallResult) {
         adLoader.cancelLoading()
         result.success()
     }
-    
+
     private func destroyAppOpenAdLoader(args: Any?, result: MethodCallResult) {
         onDestroy()
         result.success()

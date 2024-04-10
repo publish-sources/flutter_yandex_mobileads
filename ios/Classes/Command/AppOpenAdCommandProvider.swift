@@ -17,16 +17,16 @@ final class AppOpenAdCommandProvider: CommandProvider {
             .command(.appOpenAd(.destroy), destroyAppOpenAd),
         ]
     }
-    
+
     private let onDestroy: () -> Void
-    private let ad: YMAAppOpenAd
+    private let ad: AppOpenAd
     private var idCount = 0
     private let appOpenAdViewController: AppOpenAdViewController
-    
+
     let name = "appOpenAd"
-    
+
     init(
-        ad: YMAAppOpenAd,
+        ad: AppOpenAd,
         onDestroy: @escaping () -> Void,
         appOpenAdViewController: AppOpenAdViewController
     ) {
@@ -34,7 +34,7 @@ final class AppOpenAdCommandProvider: CommandProvider {
         self.onDestroy = onDestroy
         self.appOpenAdViewController = appOpenAdViewController
     }
-    
+
     private func showAppOpenAd(args: Any?, result: MethodCallResult) {
         guard let controller = Self.controller else {
             return result.error(.noViewController)
@@ -43,7 +43,7 @@ final class AppOpenAdCommandProvider: CommandProvider {
         ad.show(from: appOpenAdViewController)
         result.success()
     }
-    
+
     private func destroyAppOpenAd(args: Any?, result: MethodCallResult) {
         onDestroy()
         result.success()

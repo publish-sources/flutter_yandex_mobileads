@@ -11,14 +11,14 @@ import Foundation
 import YandexMobileAds
 
 final class BannerAdSizeFactory {
-    
-    func createFromCommandParams(params: [String: Any?]) -> YMABannerAdSize {
-        
+
+    func createFromCommandParams(params: [String: Any?]) -> BannerAdSize {
+
         let width: CGFloat = params[.width] ?? 0
         let height: CGFloat = params[.height] ?? 0
         let type: String = params[.type] ?? ""
-        let adSize: YMABannerAdSize
-        
+        let adSize: BannerAdSize
+
         switch AdSizeType(rawValue: type) {
         case .inline:
             adSize = .inlineSize(withWidth: width, maxHeight: height)
@@ -27,7 +27,7 @@ final class BannerAdSizeFactory {
         default:
             adSize = .inlineSize(withWidth: 0, maxHeight: 0)
         }
-        
+
         return adSize
     }
 }

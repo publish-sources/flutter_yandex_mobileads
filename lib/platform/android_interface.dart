@@ -11,11 +11,6 @@ part of '../mobile_ads.dart';
 
 class _AndroidInterface implements _PlatformInterface {
   @override
-  Future<void> initialize(MethodChannel channel) async {
-    await channel.invokeMethod('initialize');
-  }
-
-  @override
   Future<void> setAgeRestrictedUser(MethodChannel channel, bool value) async {
     await channel.invokeMethod('setAgeRestrictedUser', value);
   }
