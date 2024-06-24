@@ -30,7 +30,7 @@ final class BannerAdEventDelegate: EventDelegate, AdViewDelegate {
         respond(.onLeftApplication)
     }
 
-    func adView(_ adView: AdView, didTrackImpressionWith impressionData: ImpressionData?) {
+    func adView(_ adView: AdView, didTrackImpression impressionData: ImpressionData?) {
         respond(.onImpression, ["impressionData": impressionData?.rawData])
     }
 }
