@@ -60,7 +60,7 @@ class MobileAds {
   static var _ageRestrictedUser = false;
 
   /// Returns the plugin version as a string.
-  static const pluginVersion = '7.3.0';
+  static const pluginVersion = '7.4.0';
 
   /// A private constructor to prevent instancing.
   /// Using it inside the library won't be useful.
@@ -117,7 +117,6 @@ class MobileAds {
   }
 
   /// Shows Debug Panel.
-  /// Available only for Android. It will do nothing on iOS.
   static Future<void> showDebugPanel() async {
     await _channel.invokeMethod("showDebugPanel");
   }

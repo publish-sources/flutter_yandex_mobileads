@@ -8,7 +8,7 @@
  */
 
 group 'com.yandex.mobile.ads.flutter'
-version '7.3.0'
+version '7.4.0'
 
 buildscript {
     ext.kotlin_version = '1.8.0'
@@ -36,7 +36,7 @@ apply plugin: 'kotlin-android'
 android {
     namespace = "com.yandex.mobile.ads.flutter"
 
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -58,5 +58,5 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'com.yandex.android:mobileads:7.4.0'
+    implementation 'com.yandex.android:mobileads:7.5.0'
 }

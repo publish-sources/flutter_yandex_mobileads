@@ -17,6 +17,7 @@ final class MobileAdsCommandProvider: CommandProvider {
             .command(.mobileAds(.initialize), initialize),
             .command(.mobileAds(.enableLogging), enableLogging),
             .command(.mobileAds(.enableDebugErrorIndicator), enableDebugErrorIndicator),
+            .command(.mobileAds(.showDebugPanel), showDebugPanel),
             .command(.mobileAds(.setLocationConsent), setLocationConsent),
             .command(.mobileAds(.setUserConsent), setUserConsent),
         ]
@@ -38,6 +39,11 @@ final class MobileAdsCommandProvider: CommandProvider {
     private func enableDebugErrorIndicator(args: Any?, result: MethodCallResult) {
         MobileAds.enableVisibilityErrorIndicator(for: .hardware)
         MobileAds.enableVisibilityErrorIndicator(for: .simulator)
+        result.success()
+    }
+
+    private func showDebugPanel(args: Any?, result: MethodCallResult) {
+        MobileAds.showDebugPanel()
         result.success()
     }
 

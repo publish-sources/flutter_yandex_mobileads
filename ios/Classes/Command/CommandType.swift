@@ -82,6 +82,7 @@ enum MobileAdsCommand: String {
     case enableDebugErrorIndicator
     case setLocationConsent
     case setUserConsent
+    case showDebugPanel
 }
 
 enum BannerAdCommand: String {
