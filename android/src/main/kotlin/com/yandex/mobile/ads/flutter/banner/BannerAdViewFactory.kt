@@ -70,7 +70,7 @@ internal class BannerAdViewFactory(private val messenger: BinaryMessenger) :
     private fun getAdSizeMeasureSpec(sizeInPixels: Int): Int {
         return View.MeasureSpec.makeMeasureSpec(
             sizeInPixels,
-            View.MeasureSpec.AT_MOST
+            View.MeasureSpec.EXACTLY
         )
     }
 
