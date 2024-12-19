@@ -60,7 +60,7 @@ class MobileAds {
   static var _ageRestrictedUser = false;
 
   /// Returns the plugin version as a string.
-  static const pluginVersion = '7.6.0';
+  static const pluginVersion = '7.7.0';
 
   /// A private constructor to prevent instancing.
   /// Using it inside the library won't be useful.
@@ -106,7 +106,7 @@ class MobileAds {
   static bool get ageRestrictedUser => _ageRestrictedUser;
 
   static Future<void> setAgeRestrictedUser(bool value) async {
-    await _PlatformInterface.instance.setAgeRestrictedUser(_channel, value);
+    await _channel.invokeMethod('setAgeRestrictedUser', value);
     _ageRestrictedUser = value;
   }
 

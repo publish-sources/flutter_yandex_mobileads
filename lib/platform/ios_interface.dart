@@ -11,9 +11,6 @@ part of '../mobile_ads.dart';
 
 class _IosInterface implements _PlatformInterface {
   @override
-  Future<void> setAgeRestrictedUser(MethodChannel channel, bool value) async {}
-
-  @override
   Widget buildBannerAd({
     required String adUnitId,
     required BannerAdSize adSize,

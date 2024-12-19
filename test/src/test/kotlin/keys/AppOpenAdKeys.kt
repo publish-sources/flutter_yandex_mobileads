@@ -1,5 +1,7 @@
 package keys
 
+import support.NativeAccessibilityKey
+
 class AppOpenAdKeys {
     companion object {
         val log = "app-open-log"

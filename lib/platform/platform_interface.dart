@@ -24,8 +24,6 @@ abstract class _PlatformInterface {
     }
   }
 
-  Future<void> setAgeRestrictedUser(MethodChannel channel, bool value);
-
   Widget buildBannerAd({
     required String adUnitId,
     required BannerAdSize adSize,

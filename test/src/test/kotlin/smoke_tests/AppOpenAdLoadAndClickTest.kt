@@ -1,17 +1,19 @@
 package smoke_tests
 
-import support.BaseTest
+import assertBrowserOpened
 import callbacks.AppOpenAdCallbacks
 import io.qameta.allure.Epic
 import io.qameta.allure.Story
 import keys.AppOpenAdKeys
 import keys.HomeKeys
 import org.testng.annotations.Test
-import support.*
+import returnToApp
+import waitAndClick
+import waitLogsCallback
 
 @Epic("E2E тесты")
 @Story("Flutter AppOpenAd Загрузка и клик по рекламе")
-class AppOpenAdLoadAndClickTest: BaseTest() {
+class AppOpenAdLoadAndClickTest: BaseFlutterTest() {
     @Test
     fun loadAppOpenAdAndClick() {
         waitAndClick(HomeKeys.appOpenAd)

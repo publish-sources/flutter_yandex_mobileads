@@ -1,16 +1,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Parallel suite" parallel="tests" thread-count="2">
     <test name="Suite 1">
-        <parameter name="emulatorName" value="Flutter-Test-Device-1" />
-        <parameter name="simulatorName" value="Flutter Test Device 1" />
+        <parameter name="emulatorName" value="google-30-1" />
+        <parameter name="simulatorName" value="Test Device 1" />
         <parameter name="wdaPort" value="5701" />
         <classes>
             <class name="smoke_tests.AppOpenAdLoadAndClickTest" />
         </classes>
     </test>
     <test name="Suite 2">
-        <parameter name="emulatorName" value="Flutter-Test-Device-2" />
-        <parameter name="simulatorName" value="Flutter Test Device 2" />
+        <parameter name="emulatorName" value="google-30-2" />
+        <parameter name="simulatorName" value="Test Device 2" />
         <parameter name="wdaPort" value="5702" />
         <classes>
             <class name="smoke_tests.BannerLoadAndClickTest" />

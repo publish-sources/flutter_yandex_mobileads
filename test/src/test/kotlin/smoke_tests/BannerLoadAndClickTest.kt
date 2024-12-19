@@ -1,22 +1,22 @@
 package smoke_tests
 
-import callbacks.AppOpenAdCallbacks
+import assertBrowserOpened
+import banner.BannerSizeType
+import banner.setBannerSizeType
 import callbacks.BannerCallbacks
 import io.qameta.allure.Epic
 import io.qameta.allure.Story
-import keys.AppOpenAdKeys
 import keys.BannerKeys
 import keys.HomeKeys
 import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
-import support.*
-import support.banner.BannerSizeType
-import support.banner.setBannerSizeType
-import java.time.Duration
+import returnToApp
+import waitAndClick
+import waitLogsCallback
 
 @Epic("E2E тесты")
 @Story("Flutter: Загрузка и клик по баннеру")
-class BannerLoadAndClickTest: BaseTest() {
+class BannerLoadAndClickTest: BaseFlutterTest() {
     @DataProvider(name = "sizeTypeProvider")
     fun sizeTypes(): Array<BannerSizeType> {
         return arrayOf(

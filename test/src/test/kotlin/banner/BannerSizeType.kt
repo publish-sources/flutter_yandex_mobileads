@@ -1,16 +1,15 @@
-package support.banner
+package banner
 
+import enterText
 import keys.BannerKeys
-import support.BaseTest
-import support.enterText
-import support.waitAndClick
+import waitAndClick
 
 sealed class BannerSizeType {
     class Inline(val width: Int?, val height: Int?) : BannerSizeType()
     class Sticky(val width: Int?) : BannerSizeType()
 }
 
-public fun BaseTest.setBannerSizeType(type: BannerSizeType) {
+fun BaseTest.setBannerSizeType(type: BannerSizeType) {
     when (type) {
         is BannerSizeType.Inline -> {
             waitAndClick(BannerKeys.inline)

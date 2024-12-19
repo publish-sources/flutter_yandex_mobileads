@@ -20,6 +20,7 @@ final class MobileAdsCommandProvider: CommandProvider {
             .command(.mobileAds(.showDebugPanel), showDebugPanel),
             .command(.mobileAds(.setLocationConsent), setLocationConsent),
             .command(.mobileAds(.setUserConsent), setUserConsent),
+            .command(.mobileAds(.setAgeRestrictedUser), setAgeRestrictedUser),
         ]
     }
 
@@ -60,6 +61,14 @@ final class MobileAdsCommandProvider: CommandProvider {
             return result.error(.argsIsNotBool)
         }
         MobileAds.setUserConsent(value)
+        result.success()
+    }
+
+    private func setAgeRestrictedUser(args: Any?, result: MethodCallResult) {
+        guard let value = args as? Bool else {
+            return result.error(.argsIsNotBool)
+        }
+        MobileAds.setAgeRestrictedUser(value)
         result.success()
     }
 }

@@ -3,3 +3,5 @@ plugins {
 }
 rootProject.name = "test"
 
+include(":plugin-tests-support")
+project(":plugin-tests-support").projectDir = File(settingsDir, "../../plugin-tests-support")
