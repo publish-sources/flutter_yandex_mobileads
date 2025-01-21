@@ -1,15 +1,15 @@
 package smoke_tests
 
-import assertBrowserOpened
 import callbacks.AppOpenAdCallbacks
+import com.yandex.plugin_tests_support.assertBrowserOpened
+import com.yandex.plugin_tests_support.returnToApp
+import com.yandex.plugin_tests_support.waitAndClick
 import io.qameta.allure.Epic
 import io.qameta.allure.Story
 import keys.AppOpenAdKeys
 import keys.HomeKeys
 import org.testng.annotations.Test
-import returnToApp
-import waitAndClick
-import waitLogsCallback
+import support.waitLogsCallback
 
 @Epic("E2E тесты")
 @Story("Flutter AppOpenAd Загрузка и клик по рекламе")

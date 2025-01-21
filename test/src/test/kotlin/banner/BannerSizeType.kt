@@ -1,8 +1,6 @@
-package banner
+package com.yandex.plugin_tests_support
 
-import enterText
 import keys.BannerKeys
-import waitAndClick
 
 sealed class BannerSizeType {
     class Inline(val width: Int?, val height: Int?) : BannerSizeType()
@@ -12,7 +10,7 @@ sealed class BannerSizeType {
 fun BaseTest.setBannerSizeType(type: BannerSizeType) {
     when (type) {
         is BannerSizeType.Inline -> {
-            waitAndClick(BannerKeys.inline)
+            waitAndClick(BannerKeys.inlineSwitch)
             if (type.width != null) {
                 enterText(BannerKeys.width, "${type.width}")
             }
@@ -21,7 +19,7 @@ fun BaseTest.setBannerSizeType(type: BannerSizeType) {
             }
         }
         is BannerSizeType.Sticky -> {
-            waitAndClick(BannerKeys.sticky)
+            waitAndClick(BannerKeys.stickySwitch)
             if (type.width != null) {
                 enterText(BannerKeys.width, "${type.width}")
             }

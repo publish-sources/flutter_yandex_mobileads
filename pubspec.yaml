@@ -9,7 +9,7 @@
 
 name: yandex_mobileads
 description: Flutter plugin for Yandex Mobile Ads SDK. This plugin allows Flutter developers to easily integrate Yandex Mobile Ads SDK on Android and iOS apps.
-version: 7.7.0
+version: 7.8.0
 homepage: https://ads.yandex.com/monetization
 
 environment:

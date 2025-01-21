@@ -23,11 +23,16 @@ internal class BannerAdView(
     private val banner = LibBannerAdView(context).apply {
         setAdUnitId(adUnitId)
         setAdSize(adSize)
+        setTag(accessibilityId)
     }
 
     override fun getView() = banner
 
     override fun dispose() {
         banner.destroy()
+    }
+
+    companion object {
+        val accessibilityId = "banner-ad"
     }
 }

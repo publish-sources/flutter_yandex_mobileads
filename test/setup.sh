@@ -1,18 +1,18 @@
 ARG=$1
-API=30
+API=$(<../../scripts/.current_android_api)
 DEVICES_COUNT=2
 
 current_directory=$PWD
 
 prepare_android_env () {
     export FORCE_API=$API
-    . android/prepare_android_env.sh True
+    . android/prepare_android_env.sh --run-test-local True --copy-from-resource False
 }
 
 if [[ $ARG == "recreate-android-emulators" || $ARG == "bootstrap-android" ]]; then
     cd ../../scripts
     prepare_android_env
-    . android/emulator/createEmulatorFromParams.sh "$API" "$DEVICES_COUNT" no
+    . android/emulator/create_emulator_from_params.sh "$API" "$DEVICES_COUNT" no
     cd $current_directory
 fi
 
@@ -21,9 +21,9 @@ if [[ $ARG == "start-android-emulators" || $ARG == "bootstrap-android" ]]; then
     prepare_android_env
     for id in $(seq 1 $DEVICES_COUNT)
     do
-        . android/emulator/execEmulator.sh "google-$API-$id" yes no
+        . android/emulator/exec_emulator.sh "google-$API-$id" yes no
     done
-    . android/emulator/awaitAllDevicesBoot.sh "$DEVICES_COUNT"
+    . android/emulator/await_all_devices_boot.sh "$DEVICES_COUNT"
     cd $current_directory
 fi
 
@@ -43,7 +43,7 @@ fi
 if [[ $ARG == "recreate-simulators" || $ARG == "bootstrap-ios" ]]; then
     for id in 1 2
     do
-        xcrun simctl create "Flutter Test Device $id" com.apple.CoreSimulator.SimDeviceType.iPhone-15
+        xcrun simctl create "Test Device $id" com.apple.CoreSimulator.SimDeviceType.iPhone-15
     done
 fi
 
@@ -54,6 +54,7 @@ if [[ $ARG == "build-ios" || $ARG == "bootstrap-ios" ]]; then
 fi
 
 if [[ $ARG == "run-all-tests-ios" || $ARG == "bootstrap-ios" ]]; then
+    source ../../scripts/build_web_driver_agent.sh
     export APP_PATH=$PWD/../internal_test_app/build/ios/iphonesimulator/Runner.app
     export PLATFORM=ios
     npm install

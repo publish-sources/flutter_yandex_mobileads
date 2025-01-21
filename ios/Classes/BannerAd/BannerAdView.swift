@@ -13,6 +13,7 @@ import YandexMobileAds
 final class BannerAdView: NSObject, FlutterPlatformView {
 
     let banner: AdView
+    let wrappedView: UIView
 
     private weak var methodChannel: FlutterMethodChannel?
     private weak var eventChannel: FlutterEventChannel?
@@ -25,12 +26,26 @@ final class BannerAdView: NSObject, FlutterPlatformView {
         eventChannel: FlutterEventChannel
     ) {
         banner = AdView(adUnitID: adUnitId, adSize: adSize)
+        banner.accessibilityIdentifier = bannerAccessibilityIdentifier
         banner.delegate = delegate
+
         self.methodChannel = methodChannel
         self.eventChannel = eventChannel
+
+        wrappedView = UIView()
+        wrappedView.addSubview(banner)
+        banner.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            banner.topAnchor.constraint(equalTo: wrappedView.topAnchor),
+            banner.bottomAnchor.constraint(equalTo: wrappedView.bottomAnchor),
+            banner.leadingAnchor.constraint(equalTo: wrappedView.leadingAnchor),
+            banner.trailingAnchor.constraint(equalTo: wrappedView.trailingAnchor),
+        ])
     }
 
     func view() -> UIView {
-        banner
+        wrappedView
     }
+
+    private let bannerAccessibilityIdentifier = "banner-ad"
 }
