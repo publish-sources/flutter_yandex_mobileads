@@ -1,8 +1,16 @@
 ARG=$1
 API=$(<../../scripts/.current_android_api)
 DEVICES_COUNT=2
-
+PROPERTIES_FILE=local.properties
 current_directory=$PWD
+
+write_property () {
+    if [ ! -f "$PROPERTIES_FILE" ]; then
+        touch "$PROPERTIES_FILE"
+    fi
+    sed -i '' "/$1/d" "$PROPERTIES_FILE"
+    echo "$1=$2" >> "$PROPERTIES_FILE"
+}
 
 prepare_android_env () {
     export FORCE_API=$API
@@ -35,7 +43,7 @@ fi
 
 if [[ $ARG == "run-all-tests-android" || $ARG == "bootstrap-android" ]]; then
     export APP_PATH=$PWD/../internal_test_app/build/app/outputs/flutter-apk/app-release.apk
-    export PLATFORM=android
+    write_property platform android
     npm install
     ./gradlew test
 fi
@@ -56,7 +64,7 @@ fi
 if [[ $ARG == "run-all-tests-ios" || $ARG == "bootstrap-ios" ]]; then
     source ../../scripts/build_web_driver_agent.sh
     export APP_PATH=$PWD/../internal_test_app/build/ios/iphonesimulator/Runner.app
-    export PLATFORM=ios
+    write_property platform ios
     npm install
     ./gradlew test
 fi
