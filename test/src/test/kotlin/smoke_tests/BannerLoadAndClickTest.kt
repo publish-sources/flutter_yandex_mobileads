@@ -1,22 +1,21 @@
 package smoke_tests
 
+import banner.BannerSizeType
+import banner.setBannerSizeType
 import callbacks.BannerCallbacks
-import com.yandex.plugin_tests_support.BannerSizeType
 import com.yandex.plugin_tests_support.assertBrowserOpened
-import com.yandex.plugin_tests_support.click
 import com.yandex.plugin_tests_support.platformDependant
 import com.yandex.plugin_tests_support.returnToApp
-import com.yandex.plugin_tests_support.setBannerSizeType
 import com.yandex.plugin_tests_support.waitAndClick
-import support.setAdUnitId
+import com.yandex.plugin_tests_support.testPalm
 import io.qameta.allure.Epic
+import io.qameta.allure.Feature
 import io.qameta.allure.Story
 import keys.BannerKeys
 import keys.HomeKeys
 import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
 import support.ScreenName
-import support.annotations.TestPalm
 import support.waitLogsCallback
 
 @Epic("E2E тесты")
@@ -51,8 +50,9 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test(dataProvider = "sizeTypeProvider")
-    @TestPalm(3825, 3826)
     fun loadStickyBannerAdAndClick(sizeType: BannerSizeType) {
+        testPalm(3825, 3826)
+
         waitAndClick(HomeKeys.bannerPage)
         waitAndClick(BannerKeys.log)
         setBannerSizeType(sizeType)
@@ -73,8 +73,9 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test(dataProvider = "sizeTypeProvider")
-    @TestPalm(3825, 3826)
     fun loadInlineBannerAdAndClick(sizeType: BannerSizeType) {
+        testPalm(3825, 3826)
+
         waitAndClick(HomeKeys.bannerPage)
         waitAndClick(BannerKeys.log)
         setBannerSizeType(sizeType)

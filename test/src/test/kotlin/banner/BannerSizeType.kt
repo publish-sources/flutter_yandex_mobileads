@@ -1,5 +1,8 @@
-package com.yandex.plugin_tests_support
+package banner
 
+import com.yandex.plugin_tests_support.BaseTest
+import com.yandex.plugin_tests_support.enterText
+import com.yandex.plugin_tests_support.waitAndClick
 import keys.BannerKeys
 
 sealed class BannerSizeType {

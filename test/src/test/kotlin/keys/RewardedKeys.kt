@@ -1,18 +1,20 @@
 package keys
 
-import com.yandex.plugin_tests_support.NativeAccessibilityKey
+import com.yandex.plugin_tests_support.ScreenElement
 
 object RewardedKeys {
-    val adUnitId = "rewarded-ad-unit-id"
-    val log = "rewarded-log"
-    val loadAd = "rewarded-load-ad"
-    val showAd = "rewarded-show-ad"
-    var ad = NativeAccessibilityKey(
+    val adUnitId = ScreenElement.WithId("rewarded-ad-unit-id", "текстовое поле Ad Unit ID")
+    val log = ScreenElement.WithId("rewarded-log", "кнопку открытия логов")
+    val loadAd = ScreenElement.WithId("rewarded-load-ad", "кнопку Load Ad")
+    val showAd = ScreenElement.WithId("rewarded-show-ad", "кнопку Show Ad")
+    var ad = ScreenElement.WithId(
         iosId = "mac_call_to_action",
-        androidIds = listOf("call_to_action", "yma_call_to_action", "mac_call_to_action")
+        androidIds = listOf("call_to_action", "yma_call_to_action", "mac_call_to_action"),
+        name = "рекламу"
     )
-    var closeAd = NativeAccessibilityKey(
+    var closeAd = ScreenElement.WithId(
         iosId = "mac_close_button",
-        androidIds = listOf("close", "close_view", "close_button", "yma_close_button", "mac_close_button")
+        androidIds = listOf("close", "close_view", "close_button", "yma_close_button", "mac_close_button"),
+        name = "крестик"
     )
 }

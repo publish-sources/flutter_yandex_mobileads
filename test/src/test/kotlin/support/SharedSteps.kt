@@ -1,14 +1,24 @@
 package support
 
 import com.yandex.plugin_tests_support.BaseTest
+import com.yandex.plugin_tests_support.ScreenElement
 import com.yandex.plugin_tests_support.enterText
+import keys.BannerKeys
+import keys.InterstitialKeys
+import keys.RewardedKeys
 
-object ScreenName {
-    const val Banner = "banner"
-    const val Interstitial = "interstitial"
-    const val Rewarded = "rewarded"
+enum class ScreenName {
+    Banner {
+        override fun adUnitIdField() = BannerKeys.adUnitId
+    }, Interstitial {
+        override fun adUnitIdField() = InterstitialKeys.adUnitId
+    }, Rewarded {
+        override fun adUnitIdField() = RewardedKeys.adUnitId
+    };
+
+    abstract fun adUnitIdField(): ScreenElement
 }
 
-fun BaseTest.setAdUnitId(screen: String, adUnitId: String) {
-    enterText("$screen-ad-unit-id", adUnitId)
+fun BaseTest.setAdUnitId(screen: ScreenName, adUnitId: String) {
+    enterText(screen.adUnitIdField(), adUnitId)
 }
