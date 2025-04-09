@@ -33,4 +33,8 @@ final class BannerAdEventDelegate: EventDelegate, AdViewDelegate {
     func adView(_ adView: AdView, didTrackImpression impressionData: ImpressionData?) {
         respond(.onImpression, ["impressionData": impressionData?.rawData])
     }
+    
+    func close(_ adView: YandexMobileAds.AdView) {
+        respond(.onAdClose)
+    }
 }

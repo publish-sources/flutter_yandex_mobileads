@@ -26,7 +26,10 @@ enum _CallbackName {
   onReturnedToApplication,
 
   /// Notifies that an ad impression has been counted.
-  onImpression;
+  onImpression,
+
+  /// Notifies that the user has chosen a reason for closing the ad and the ad must be hidden
+  onAdClose;
 
   static _CallbackName? find(String name) {
     for (_CallbackName value in _CallbackName.values) {

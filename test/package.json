@@ -3,8 +3,8 @@
     "appium": "^2.12.0"
   },
   "devDependencies": {
-    "appium-espresso-driver": "^3.5.0",
-    "appium-xcuitest-driver": "^7.28.3"
+    "appium-espresso-driver": "^4.0.5",
+    "appium-xcuitest-driver": "^8.3.3"
   },
   "scripts": {}
 }

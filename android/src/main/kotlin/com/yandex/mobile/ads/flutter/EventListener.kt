@@ -47,6 +47,8 @@ internal abstract class EventListener : EventChannel.StreamHandler {
         mapOf(IMPRESSION_DATA to impressionData?.rawData),
     )
 
+    fun closeBannerAd() = respond(ON_AD_CLOSE)
+
     protected companion object {
 
         const val ON_AD_LOADED = "onAdLoaded"
@@ -55,6 +57,7 @@ internal abstract class EventListener : EventChannel.StreamHandler {
         const val ON_LEFT_APPLICATION = "onLeftApplication"
         const val ON_RETURNED_TO_APPLICATION = "onReturnedToApplication"
         const val ON_IMPRESSION = "onImpression"
+        const val ON_AD_CLOSE = "onAdClose"
 
         const val CODE = "code"
         const val DESCRIPTION = "description"

@@ -10,12 +10,12 @@
 package com.yandex.mobile.ads.flutter.banner
 
 import android.util.Log
-import com.yandex.mobile.ads.banner.BannerAdEventListener
+import com.yandex.mobile.ads.banner.ClosableBannerAdEventListener
 import com.yandex.mobile.ads.flutter.EventListener
 
 internal class BannerAdEventListener(
     private val getLoadedBannerSize: () -> Pair<Int, Int>,
-) : EventListener(), BannerAdEventListener {
+) : EventListener(), ClosableBannerAdEventListener {
 
     override fun onAdLoaded() {
         val (width, height) = getLoadedBannerSize()

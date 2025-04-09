@@ -41,4 +41,5 @@ enum CallbackName: String {
     case onLeftApplication
     case onReturnedToApplication
     case onImpression
+    case onAdClose
 }

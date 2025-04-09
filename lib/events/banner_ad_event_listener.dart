@@ -30,6 +30,9 @@ class _BannerAdEventListener {
   /// Notifies that an ad impression has been counted.
   final void Function(ImpressionData impressionData)? onImpression;
 
+  /// Notifies that the user has chosen a reason for closing the ad and the ad must be hidden
+  final void Function()? onAdClose;
+
   late Stream eventStream;
 
   _BannerAdEventListener({
@@ -40,6 +43,7 @@ class _BannerAdEventListener {
     this.onLeftApplication,
     this.onReturnedToApplication,
     this.onImpression,
+    this.onAdClose,
   });
 
   Future<void> setupCallbacks() async {
@@ -65,6 +69,9 @@ class _BannerAdEventListener {
         case _CallbackName.onImpression:
           onImpression?.call(
               _SimpleImpressionData(rawData: result['impressionData'] ?? ""));
+          break;
+        case _CallbackName.onAdClose:
+          onAdClose?.call();
           break;
         default:
           break;

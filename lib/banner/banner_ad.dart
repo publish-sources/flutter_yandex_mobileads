@@ -58,17 +58,18 @@ class BannerAd with _Ad {
     void Function()? onLeftApplication,
     void Function()? onReturnedToApplication,
     void Function(ImpressionData impressionData)? onImpression,
+    void Function()? onAdClose,
   }) : _adUnitId = adUnitId {
     _channel = MethodChannel('$_channelPath.$_id');
     _eventListener = _BannerAdEventListener(
-      channelName: '$_channelPath.$_id.events',
-      onAdLoaded: onAdLoaded,
-      onAdFailedToLoad: onAdFailedToLoad,
-      onAdClicked: onAdClicked,
-      onLeftApplication: onLeftApplication,
-      onReturnedToApplication: onReturnedToApplication,
-      onImpression: onImpression,
-    );
+        channelName: '$_channelPath.$_id.events',
+        onAdLoaded: onAdLoaded,
+        onAdFailedToLoad: onAdFailedToLoad,
+        onAdClicked: onAdClicked,
+        onLeftApplication: onLeftApplication,
+        onReturnedToApplication: onReturnedToApplication,
+        onImpression: onImpression,
+        onAdClose: onAdClose);
   }
 }
 
