@@ -40,9 +40,11 @@ final class RewardedAdCommandProvider: CommandProvider {
         guard let controller = Self.controller else {
             return result.error(.noViewController)
         }
-        controller.present(rewardedAdViewController, animated: false)
-        ad.show(from: rewardedAdViewController)
-        result.success()
+        controller.present(rewardedAdViewController, animated: false) { [weak self] in
+            guard let self else { return }
+            self.ad.show(from: self.rewardedAdViewController)
+            result.success()
+        }
     }
 
     private func destroyRewardedAd(args: Any?, result: MethodCallResult) {

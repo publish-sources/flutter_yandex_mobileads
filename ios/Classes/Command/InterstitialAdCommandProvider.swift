@@ -40,9 +40,11 @@ final class InterstitialAdCommandProvider: CommandProvider {
         guard let controller = Self.controller else {
             return result.error(.noViewController)
         }
-        controller.present(interstitialAdViewController, animated: false)
-        ad.show(from: interstitialAdViewController)
-        result.success()
+        controller.present(interstitialAdViewController, animated: false) { [weak self] in
+            guard let self else { return }
+            self.ad.show(from: self.interstitialAdViewController)
+            result.success()
+        }
     }
 
     private func destroyInterstitialAd(args: Any?, result: MethodCallResult) {

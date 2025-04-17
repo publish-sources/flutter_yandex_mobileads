@@ -55,12 +55,12 @@ class BaseFullscreenAdViewController: UIViewController {
     }
     
     func adDidDismiss() {
-        dismiss(animated: false)
+        presentingViewController?.dismiss(animated: false)
         fullScreenEvendDelegate.respond(.onAdDismissed)
     }
     
     func adDidFailToShow(_ error: Error) {
-        dismiss(animated: false)
+        presentingViewController?.dismiss(animated: false)
         fullScreenEvendDelegate.respond(.onAdFailedToShow, error.toMap())
     }
 }

@@ -39,9 +39,11 @@ final class AppOpenAdCommandProvider: CommandProvider {
         guard let controller = Self.controller else {
             return result.error(.noViewController)
         }
-        controller.present(appOpenAdViewController, animated: false)
-        ad.show(from: appOpenAdViewController)
-        result.success()
+        controller.present(appOpenAdViewController, animated: false) { [weak self] in
+            guard let self else { return }
+            self.ad.show(from: self.appOpenAdViewController)
+            result.success()
+        }
     }
 
     private func destroyAppOpenAd(args: Any?, result: MethodCallResult) {
