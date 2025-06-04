@@ -10,5 +10,5 @@ object BannerKeys {
     val inlineSwitch = ScreenElement.WithId("banner-inline", "переключатель Inline")
     val stickySwitch = ScreenElement.WithId("banner-sticky", "переключатель Sticky")
     val log = ScreenElement.WithId("banner-log", "кнопку открытия логов")
-    var banner = ScreenElement.WithId("banner-ad", "баннер", isNative = true)
+    val banner = ScreenElement.WithId("banner-ad", "баннер", isNative = true)
 }

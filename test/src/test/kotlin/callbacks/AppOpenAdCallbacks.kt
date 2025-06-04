@@ -6,4 +6,5 @@ object AppOpenAdCallbacks {
     val shown = "app open ad showed"
     val clicked = "app open ad clicked"
     val dismissed = "app open ad dismissed"
+    val notExist = "does not exist"
 }

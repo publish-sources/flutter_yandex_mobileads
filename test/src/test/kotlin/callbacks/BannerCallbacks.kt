@@ -6,4 +6,5 @@ object BannerCallbacks {
     val clicked = "banner ad clicked"
     val leftApp = "left app"
     val returnedToApp = "returned to app"
+    val notExist = "does not exist"
 }

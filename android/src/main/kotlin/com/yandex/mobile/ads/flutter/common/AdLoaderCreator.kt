@@ -31,7 +31,7 @@ internal class AdLoaderCreator(
         val methodChannel = MethodChannel(messenger, name)
         val eventChannel = EventChannel(messenger, "$name.events")
         val provider = onDestroyHandlerProvider {
-            methodChannel.setMethodCallHandler(null)
+            methodChannel.setMethodCallHandler(EmptyMethodCallHandler())
             eventChannel.setStreamHandler(null)
         }
         methodChannel.setMethodCallHandler { call, result ->

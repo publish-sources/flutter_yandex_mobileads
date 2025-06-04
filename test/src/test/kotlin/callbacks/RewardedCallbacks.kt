@@ -6,4 +6,5 @@ object RewardedCallbacks {
     val shown = "shown rewarded ad"
     val clicked = "rewarded ad clicked"
     val dismissed = "rewarded ad dismissed"
+    val notExist = "does not exist"
 }

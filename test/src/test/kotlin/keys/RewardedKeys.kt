@@ -3,14 +3,19 @@ package keys
 import com.yandex.plugin_tests_support.ScreenElement
 
 object RewardedKeys {
-    val adUnitId = ScreenElement.WithId("rewarded-ad-unit-id", "текстовое поле Ad Unit ID")
+    val adUnitId = ScreenElement.WithId("banner-ad-unit-id", "текстовое поле Ad Unit ID")
     val log = ScreenElement.WithId("rewarded-log", "кнопку открытия логов")
     val loadAd = ScreenElement.WithId("rewarded-load-ad", "кнопку Load Ad")
     val showAd = ScreenElement.WithId("rewarded-show-ad", "кнопку Show Ad")
-    var ad = ScreenElement.WithId(
+    val ad = ScreenElement.WithId(
+        iosId = "mac_rewarded",
+        androidIds = listOf("yma_root_layout"),
+        name = "рекламу"
+    )
+    val callToAction = ScreenElement.WithId(
         iosId = "mac_call_to_action",
         androidIds = listOf("call_to_action", "yma_call_to_action", "mac_call_to_action"),
-        name = "рекламу"
+        name = "кнопку Call To Action"
     )
     var closeAd = ScreenElement.WithId(
         iosId = "mac_close_button",

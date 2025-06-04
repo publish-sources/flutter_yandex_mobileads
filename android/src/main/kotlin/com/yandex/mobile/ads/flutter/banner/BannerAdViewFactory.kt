@@ -16,6 +16,7 @@ import com.yandex.mobile.ads.flutter.YandexMobileAdsPlugin
 import com.yandex.mobile.ads.flutter.banner.BannerAdUtil.toDp
 import com.yandex.mobile.ads.flutter.banner.command.DestroyBannerCommandHandler
 import com.yandex.mobile.ads.flutter.banner.command.LoadBannerCommandHandler
+import com.yandex.mobile.ads.flutter.common.EmptyMethodCallHandler
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
@@ -88,7 +89,7 @@ internal class BannerAdViewFactory(private val messenger: BinaryMessenger) :
             mapOf(
                 LOAD to LoadBannerCommandHandler(bannerAdHolder),
                 DESTROY to DestroyBannerCommandHandler(bannerAdHolder) {
-                    methodChannel.setMethodCallHandler(null)
+                    methodChannel.setMethodCallHandler(EmptyMethodCallHandler())
                     eventChannel.setStreamHandler(null)
                 }
             )

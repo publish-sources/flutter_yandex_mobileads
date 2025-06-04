@@ -6,4 +6,5 @@ object InterstitialCallbacks {
     val shown = "interstitial ad showed"
     val clicked = "interstitial ad clicked"
     val dismissed = "interstitial ad dismissed"
+    val notExist = "does not exist"
 }

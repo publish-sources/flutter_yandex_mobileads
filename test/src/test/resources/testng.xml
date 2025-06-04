@@ -10,6 +10,7 @@
         <classes>
             <class name="smoke_tests.AppOpenAdLoadAndClickTest" />
             <class name="smoke_tests.InterstitialLoadAndClickTest" />
+            <class name="smoke_tests.DebugPanelScreenshotTest" />
         </classes>
     </test>
     <test name="Suite 2">

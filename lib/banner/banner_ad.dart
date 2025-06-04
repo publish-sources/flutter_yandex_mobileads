@@ -43,7 +43,6 @@ class BannerAd with _Ad {
       _pluginVersion: MobileAds.pluginVersion,
     }..addAll(adRequest?.parameters ?? {});
     _channel.invokeMethod('load', map);
-    _finalizer.attach(this, _channel, detach: this);
   }
 
   void Function(int width, int height)? _onAdLoaded;
@@ -70,6 +69,7 @@ class BannerAd with _Ad {
         onReturnedToApplication: onReturnedToApplication,
         onImpression: onImpression,
         onAdClose: onAdClose);
+    _finalizer.attach(this, _channel, detach: this);
   }
 }
 
@@ -93,10 +93,14 @@ class _AdWidgetState extends State<AdWidget> {
     super.initState();
     width = widget.bannerAd.adSize.width;
     height = BannerAdSize._initialHeight;
-    widget.bannerAd._onAdLoaded = (width, height) => setState(() {
+    widget.bannerAd._onAdLoaded = (width, height) {
+      if (mounted) {
+        setState(() {
           this.width = width;
           this.height = height;
         });
+      }
+    };
   }
 
   @override
