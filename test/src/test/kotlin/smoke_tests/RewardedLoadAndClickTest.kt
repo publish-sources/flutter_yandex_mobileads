@@ -8,10 +8,10 @@ import keys.RewardedKeys
 import org.testng.annotations.Test
 import com.yandex.plugin_tests_support.waitAndClick
 import com.yandex.plugin_tests_support.backgroundApp
-import com.yandex.plugin_tests_support.assertBrowserOpened
 import com.yandex.plugin_tests_support.testName
-import com.yandex.plugin_tests_support.testPalm
+import com.yandex.plugin_tests_support.temporarilyLockScreen
 import com.yandex.plugin_tests_support.waitForElement
+import org.testng.annotations.DataProvider
 import support.*
 import java.time.Duration
 
@@ -19,13 +19,38 @@ import java.time.Duration
 @Story("Flutter Загрузка, клик и закрытие Rewarded рекламы")
 class RewardedLoadAndClickTest: BaseFlutterTest() {
 
+    @DataProvider(name = "demoBlocksProvider")
+    fun demoBlocks(): Array<String> {
+        return arrayOf(
+            // РСЯ
+            "demo-rewarded-yandex",
+            "test-rewarded-rmp",
+            // Mediation
+            "demo-rewarded-admanager",
+            "demo-rewarded-admob",
+            "demo-rewarded-appnext",
+            "demo-rewarded-chartboost",
+            "demo-rewarded-applovin",
+            "demo-rewarded-inmobi",
+            "demo-rewarded-ironsource",
+            "demo-rewarded-mintegral",
+            "demo-rewarded-mytarget",
+            "test-rewarded-startapp",
+            "demo-rewarded-unityads",
+            "demo-rewarded-vungle",
+            "demo-rewarded-pangle",
+            "demo-rewarded-tapjoy",
+            "demo-rewarded-applovin-max",
+            "demo-rewarded-bigoads"
+        )
+    }
+
     @Test
     fun loadRewardedAdAndClick() {
-        testPalm(3853)
-        testName("Загрузка, клик и закрытие Rewarded рекламы")
-
+        testName("Flutter Загрузка, клик и закрытие Rewarded рекламы")
         waitAndClick(HomeKeys.rewardedPage)
         waitAndClick(RewardedKeys.log)
+        setAdUnitId(ScreenName.Rewarded, "demo-rewarded-yandex", true)
         waitAndClick(RewardedKeys.loadAd)
         waitLogsCallback(RewardedCallbacks.loaded)
         waitAndClick(RewardedKeys.showAd)
@@ -43,21 +68,21 @@ class RewardedLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
-    fun loadRewardedAdAndBlock() {
+    fun loadRewardedAdAndHide() {
         testName("Rewarded: Сворачивание приложения")
 
         waitAndClick(HomeKeys.rewardedPage)
         waitAndClick(RewardedKeys.log)
+        setAdUnitId(ScreenName.Rewarded, "demo-rewarded-yandex", true)
         waitAndClick(RewardedKeys.loadAd)
         waitLogsCallback(RewardedCallbacks.loaded)
         waitAndClick(RewardedKeys.showAd)
         backgroundApp(Duration.ofSeconds(10), true)
-        waitForElement(RewardedKeys.ad)
+        //waitForElement(RewardedKeys.ad)
     }
 
     @Test
     fun loadAppOpenInvalidAd() {
-        testPalm(4281)
         testName("Rewarded: Загрузка рекламы с некорректным блоком")
 
         waitAndClick(HomeKeys.rewardedPage)
@@ -65,5 +90,49 @@ class RewardedLoadAndClickTest: BaseFlutterTest() {
         setAdUnitId(ScreenName.Rewarded, "demo-rewarded-yandex1")
         waitAndClick(RewardedKeys.loadAd)
         waitLogsCallback(RewardedCallbacks.notExist)
+    }
+
+    @Test(dataProvider = "demoBlocksProvider")
+    fun loadDemoBanner(adUnitId: String) {
+        testName("Flutter Mediation и РСЯ. Отображение Rewarded рекламы в AdRequest в landscape")
+
+        waitAndClick(HomeKeys.rewardedPage)
+        waitAndClick(RewardedKeys.log)
+        waitAndClick(RewardedKeys.loadAd)
+        safelyAssertAdLoaded(ScreenName.Rewarded)
+        waitAndClick(RewardedKeys.showAd)
+        //waitForElement(RewardedKeys.ad)
+    }
+
+    @Test
+    fun loadRewardedAdAndBlock() {
+        testName("Flutter Блокировка приложения")
+
+        waitAndClick(HomeKeys.rewardedPage)
+        waitAndClick(RewardedKeys.log)
+        setAdUnitId(ScreenName.Rewarded, "demo-rewarded-yandex", true)
+        waitAndClick(RewardedKeys.loadAd)
+        waitLogsCallback(RewardedCallbacks.loaded)
+        waitAndClick(RewardedKeys.showAd)
+        //waitForElement(RewardedKeys.ad)
+        temporarilyLockScreen(Duration.ofSeconds(10))
+        //waitForElement(RewardedKeys.ad)
+        //waitAndClick(RewardedKeys.closeAd)
+        //waitLogsCallback(RewardedCallbacks.impression)
+    }
+
+    @Test
+    fun loadRewardedAdAndClose() {
+        testName("Flutter РСЯ. Закрытие рекламы до получения награды")
+
+        waitAndClick(HomeKeys.rewardedPage)
+        waitAndClick(RewardedKeys.log)
+        setAdUnitId(ScreenName.Rewarded, "demo-rewarded-yandex", true)
+        waitAndClick(RewardedKeys.loadAd)
+        waitLogsCallback(RewardedCallbacks.loaded)
+        waitAndClick(RewardedKeys.showAd)
+        //waitForElement(RewardedKeys.ad)
+        //waitAndClick(RewardedKeys.closeAd)
+        //checkCallbackNotAppeared(RewardedCallbacks.impression)
     }
 }

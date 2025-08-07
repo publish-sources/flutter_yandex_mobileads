@@ -1,5 +1,6 @@
 package keys
 
+import com.yandex.plugin_tests_support.AndroidElementId
 import com.yandex.plugin_tests_support.ScreenElement
 
 object InterstitialKeys {
@@ -9,22 +10,26 @@ object InterstitialKeys {
     val showAd = ScreenElement.WithId("interstitial-show-ad", "кнопку Show Ad")
     val callToAction = ScreenElement.WithId(
         iosId = "mac_call_to_action",
-        androidIds = listOf("call_to_action", "yma_call_to_action", "mac_call_to_action"),
-        name = "кнопку Call To Action"
+        androidId = AndroidElementId.Tags("call_to_action", "yma_call_to_action", "mac_call_to_action"),
+        name = "кнопку Call To Action",
+        isNative = true
     )
     val ad = ScreenElement.WithId(
         iosId = "mac_interstitial",
-        androidIds = listOf("yma_root_layout"),
-        name = "рекламу"
+        androidId = AndroidElementId.Tags("yma_root_layout"),
+        name = "рекламу",
+        isNative = true
     )
     val closeAd = ScreenElement.WithId(
         iosId = "mac_close_button",
-        androidIds = listOf("close", "close_view", "close_button", "yma_close_button", "mac_close_button"),
-        name = "крестик"
+        androidId = AndroidElementId.Tags("close", "close_view", "close_button", "yma_close_button", "mac_close_button"),
+        name = "крестик",
+        isNative = true
     )
     val skipButton = ScreenElement.WithId(
         iosId = "mac_skip_button",
-        androidIds = listOf("skip_button"),
-        name = "кнопку пропуска"
+        androidId = AndroidElementId.Tags("skip_button"),
+        name = "кнопку пропуска",
+        isNative = true
     )
 }

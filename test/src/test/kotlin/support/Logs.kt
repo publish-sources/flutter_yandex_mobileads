@@ -22,3 +22,19 @@ fun BaseTest.waitLogsCallback(expectedCallback: String, timeout: Duration = Dura
         throw AssertionError("$expectedCallback not found")
     }
 }
+
+fun BaseTest.checkCallbackNotAppeared(expectedCallback: String, timeout: Duration = Duration.ofSeconds(10)) {
+    allureStep("Проверить, что в логах не отображается: $expectedCallback") {
+        val timeSource = TimeSource.Monotonic
+        val start = timeSource.markNow()
+        while (timeSource.markNow().minus(start) < timeout.toKotlinDuration()) {
+            val logs = getElementContentDescription(CommonKeys.logText)
+            if (logs.contains(expectedCallback)) {
+                throw AssertionError("$expectedCallback not found")
+
+            }
+        }
+
+        return@allureStep
+    }
+}

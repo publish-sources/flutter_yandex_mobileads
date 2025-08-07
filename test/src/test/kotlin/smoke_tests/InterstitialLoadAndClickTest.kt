@@ -10,10 +10,9 @@ import com.yandex.plugin_tests_support.returnToApp
 import com.yandex.plugin_tests_support.waitAndClick
 import com.yandex.plugin_tests_support.backgroundApp
 import com.yandex.plugin_tests_support.testName
-import com.yandex.plugin_tests_support.testPalm
+import com.yandex.plugin_tests_support.temporarilyLockScreen
 import com.yandex.plugin_tests_support.waitForElement
-import com.yandex.plugin_tests_support.waitForElement
-import io.qameta.allure.AllureId
+import org.testng.annotations.DataProvider
 import support.*
 import java.time.Duration
 
@@ -21,13 +20,40 @@ import java.time.Duration
 @Story("Flutter Загрузка, клик и закрытие Interstitial рекламы")
 class InterstitialLoadAndClickTest: BaseFlutterTest() {
 
+    @DataProvider(name = "demoBlocksProvider")
+    fun demoBlocks(): Array<String> {
+        return arrayOf(
+            // РСЯ
+            "demo-interstitial-yandex",
+            "test-interstitial-video-tga-rmp",
+            "test-interstitial-adpod-rmp",
+            // Mediation
+            "demo-interstitial-admanager",
+            "demo-interstitial-admob",
+            "demo-interstitial-appnext",
+            "demo-interstitial-chartboost",
+            "demo-interstitial-applovin",
+            "demo-interstitial-inmobi",
+            "demo-interstitial-ironsource",
+            "demo-interstitial-mintegral",
+            "demo-interstitial-mytarget",
+            "test-interstitial-startapp",
+            "demo-interstitial-unityads",
+            "demo-interstitial-vungle",
+            "demo-interstitial-pangle-land",
+            "demo-interstitial-tapjoy",
+            "demo-interstitial-applovin-max",
+            "demo-interstitial-bigoads"
+        )
+    }
+
     @Test
     fun loadInterstitialAdAndClick() {
-        testPalm(3845)
         testName("Загрузка, клик и закрытие Interstitial рекламы")
 
         waitAndClick(HomeKeys.interstitialPage)
         waitAndClick(InterstitialKeys.log)
+        setAdUnitId(ScreenName.Interstitial, "demo-interstitial-yandex", true)
         waitAndClick(InterstitialKeys.loadAd)
         waitLogsCallback(InterstitialCallbacks.loaded)
         waitAndClick(InterstitialKeys.showAd)
@@ -46,11 +72,12 @@ class InterstitialLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
-    fun loadInterstitialAdAndBlock() {
+    fun loadInterstitialAdAndHide() {
         testName("Interstitial: Сворачивание приложения")
 
         waitAndClick(HomeKeys.interstitialPage)
         waitAndClick(InterstitialKeys.log)
+        setAdUnitId(ScreenName.Interstitial, "demo-interstitial-yandex", true)
         waitAndClick(InterstitialKeys.loadAd)
         waitLogsCallback(InterstitialCallbacks.loaded)
         waitAndClick(InterstitialKeys.showAd)
@@ -60,7 +87,6 @@ class InterstitialLoadAndClickTest: BaseFlutterTest() {
 
     @Test
     fun loadInterstitialInvalidAd() {
-        testPalm(4281)
         testName("Interstitial: Загрузка рекламы с некорректным блоком")
 
         waitAndClick(HomeKeys.interstitialPage)
@@ -68,5 +94,35 @@ class InterstitialLoadAndClickTest: BaseFlutterTest() {
         setAdUnitId(ScreenName.Interstitial, "demo-interstitial-yandex1")
         waitAndClick(InterstitialKeys.loadAd)
         waitLogsCallback(InterstitialCallbacks.notExist)
+    }
+
+    @Test(dataProvider = "demoBlocksProvider")
+    fun loadDemoBanner(adUnitId: String) {
+        testName("Flutter Mediation и РСЯ. Отображение в landscape")
+
+        waitAndClick(HomeKeys.interstitialPage)
+        waitAndClick(InterstitialKeys.log)
+        waitAndClick(InterstitialKeys.loadAd)
+        safelyAssertAdLoaded(ScreenName.Interstitial)
+        waitAndClick(InterstitialKeys.showAd)
+        waitForElement(InterstitialKeys.ad)
+    }
+
+    @Test
+    fun loadInterstitialAdAndBlock() {
+        testName("Flutter Блокировка приложения")
+
+        waitAndClick(HomeKeys.interstitialPage)
+        waitAndClick(InterstitialKeys.log)
+        setAdUnitId(ScreenName.Interstitial, "demo-interstitial-yandex", true)
+        waitAndClick(InterstitialKeys.loadAd)
+        waitLogsCallback(InterstitialCallbacks.loaded)
+        waitAndClick(InterstitialKeys.showAd)
+        waitForElement(InterstitialKeys.ad)
+        temporarilyLockScreen(Duration.ofSeconds(10))
+        waitForElement(InterstitialKeys.ad)
+        waitAndClick(InterstitialKeys.skipButton)
+        waitAndClick(InterstitialKeys.closeAd)
+        waitLogsCallback(InterstitialCallbacks.impression)
     }
 }

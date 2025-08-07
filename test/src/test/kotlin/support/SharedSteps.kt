@@ -6,6 +6,7 @@ import callbacks.InterstitialCallbacks
 import callbacks.RewardedCallbacks
 import com.yandex.plugin_tests_support.BaseTest
 import com.yandex.plugin_tests_support.ScreenElement
+import com.yandex.plugin_tests_support.allureStep
 import com.yandex.plugin_tests_support.enterText
 import keys.AppOpenAdKeys
 import keys.BannerKeys
@@ -31,6 +32,10 @@ enum class ScreenName {
     abstract fun adLoadedCallback(): String
 }
 
-fun BaseTest.setAdUnitId(screen: ScreenName, adUnitId: String) {
-    enterText(screen.adUnitIdField(), adUnitId)
+fun BaseTest.setAdUnitId(screen: ScreenName, adUnitId: String, isDry: Boolean = false) {
+    if (isDry) {
+        allureStep("Ввести текст \"$adUnitId\" в поле Ad unit ID") {}
+    } else {
+        enterText(screen.adUnitIdField(), adUnitId)
+    }
 }

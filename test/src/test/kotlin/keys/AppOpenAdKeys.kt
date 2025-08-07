@@ -1,5 +1,6 @@
 package keys
 
+import com.yandex.plugin_tests_support.AndroidElementId
 import com.yandex.plugin_tests_support.ScreenElement
 
 object AppOpenAdKeys {
@@ -9,17 +10,20 @@ object AppOpenAdKeys {
     val showAd = ScreenElement.WithId("app-open-show-ad", "кнопку Show Ad")
     val ad = ScreenElement.WithId(
         iosId = "mac_interstitial",
-        androidIds = listOf("yma_root_layout"),
-        name = "рекламу"
+        androidId = AndroidElementId.Tags("yma_root_layout"),
+        name = "рекламу",
+        isNative = true
     )
     val callToAction = ScreenElement.WithId(
         iosId = "mac_call_to_action",
-        androidIds = listOf("call_to_action", "yma_call_to_action", "mac_call_to_action"),
-        name = "кнопку Call To Action"
+        androidId = AndroidElementId.Tags("call_to_action", "yma_call_to_action", "mac_call_to_action"),
+        name = "кнопку Call To Action",
+        isNative = true
     )
     val closeAd = ScreenElement.WithId(
         iosId = "mac_close_button",
-        androidIds = listOf("close", "mac_close_button"),
-        name = "крестик закрытия рекламы"
+        androidId = AndroidElementId.Tags("close", "mac_close_button"),
+        name = "крестик закрытия рекламы",
+        isNative = true
     )
 }

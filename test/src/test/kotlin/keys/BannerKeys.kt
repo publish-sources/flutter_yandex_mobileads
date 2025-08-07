@@ -1,5 +1,6 @@
 package keys
 
+import com.yandex.plugin_tests_support.AndroidElementId
 import com.yandex.plugin_tests_support.ScreenElement
 
 object BannerKeys {
@@ -10,5 +11,5 @@ object BannerKeys {
     val inlineSwitch = ScreenElement.WithId("banner-inline", "переключатель Inline")
     val stickySwitch = ScreenElement.WithId("banner-sticky", "переключатель Sticky")
     val log = ScreenElement.WithId("banner-log", "кнопку открытия логов")
-    val banner = ScreenElement.WithId("banner-ad", "баннер", isNative = true)
+    val banner = ScreenElement.WithId("banner-ad", AndroidElementId.Tags("banner-ad"), "баннер", isNative = true)
 }
