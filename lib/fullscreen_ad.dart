@@ -13,16 +13,17 @@ abstract class _FullscreenAd with _Ad {
   _FullScreenAdEventListener? _eventListener;
 
   final int id;
+  final String channelName;
   final AdInfo? adInfo;
 
+  @override
+  String get methodChannelName => '$channelName.$id';
+
   _FullscreenAd({
-    required String channelName,
+    required this.channelName,
     required this.id,
     this.adInfo,
-  }) {
-    _channel = MethodChannel('$channelName.$id');
-    _finalizer.attach(this, _channel, detach: this);
-  }
+  });
 
   Future<void> _setAdEventListener(
       {required _FullScreenAdEventListener eventListener}) async {

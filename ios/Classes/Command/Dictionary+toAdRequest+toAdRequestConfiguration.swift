@@ -20,7 +20,7 @@ extension Dictionary where Key == String {
         request.contextTags = self[.contextTags]
         request.gender = self[.gender]
         request.location = self[.location]
-        request.adTheme = self.stringToAdTheme(adTheme: self[.adTheme] as String?)
+        request.adTheme = self.stringToAdTheme(adTheme: self[.preferredTheme] as String?)
         request.parameters = self[.parameters]
 
         return request
@@ -43,7 +43,7 @@ extension Dictionary where Key == String {
                 requestConfiguration.location = location
             }
         }
-        requestConfiguration.adTheme = self.stringToAdTheme(adTheme: self[.adTheme] as String?)
+        requestConfiguration.adTheme = self.stringToAdTheme(adTheme: self[.preferredTheme] as String?)
         requestConfiguration.parameters = self[.parameters]
 
         return requestConfiguration

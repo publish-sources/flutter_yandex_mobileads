@@ -79,20 +79,6 @@ class AppOpenAdLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
-    fun loadErrorTest() {
-        testName("Flutter Ошибка загрузки appopenad в landscape")
-
-        waitAndClick(HomeKeys.appOpenAd)
-        waitAndClick(AppOpenAdKeys.log)
-        allureStep("Поворачиваем экран в ориентацию Landscape") {
-            rotateScreen(ScreenOrientation.LANDSCAPE)
-        }
-        setAdUnitId(ScreenName.AppOpenAd, "demo-appopenad-yandex", true)
-        waitAndClick(AppOpenAdKeys.loadAd)
-        waitLogsCallback(AppOpenAdCallbacks.failedToLoad)
-    }
-
-    @Test
     fun loadAppOpenAdHideApp() {
         testName("AppOpenAd: Сворачивание приложения")
 

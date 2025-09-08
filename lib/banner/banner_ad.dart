@@ -25,6 +25,9 @@ class BannerAd with _Ad {
   late final String _adUnitId;
   late final _BannerAdEventListener _eventListener;
 
+  @override
+  String get methodChannelName => '$_channelPath.$_id';
+
   late final Widget _widget = _PlatformInterface.instance.buildBannerAd(
       adUnitId: _adUnitId,
       adSize: adSize,
@@ -59,17 +62,16 @@ class BannerAd with _Ad {
     void Function(ImpressionData impressionData)? onImpression,
     void Function()? onAdClose,
   }) : _adUnitId = adUnitId {
-    _channel = MethodChannel('$_channelPath.$_id');
     _eventListener = _BannerAdEventListener(
-        channelName: '$_channelPath.$_id.events',
-        onAdLoaded: onAdLoaded,
-        onAdFailedToLoad: onAdFailedToLoad,
-        onAdClicked: onAdClicked,
-        onLeftApplication: onLeftApplication,
-        onReturnedToApplication: onReturnedToApplication,
-        onImpression: onImpression,
-        onAdClose: onAdClose);
-    _finalizer.attach(this, _channel, detach: this);
+      channelName: '$_channelPath.$_id.events',
+      onAdLoaded: onAdLoaded,
+      onAdFailedToLoad: onAdFailedToLoad,
+      onAdClicked: onAdClicked,
+      onLeftApplication: onLeftApplication,
+      onReturnedToApplication: onReturnedToApplication,
+      onImpression: onImpression,
+      onAdClose: onAdClose,
+    );
   }
 }
 

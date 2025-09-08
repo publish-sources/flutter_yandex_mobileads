@@ -15,6 +15,6 @@ enum AdRequestParameter: String {
     case contextTags
     case gender
     case location
-    case adTheme
+    case preferredTheme
     case parameters
 }
