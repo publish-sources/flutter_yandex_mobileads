@@ -3,9 +3,7 @@ package smoke_tests
 import banner.BannerSizeType
 import banner.setBannerSizeType
 import callbacks.BannerCallbacks
-import com.yandex.plugin_tests_support.allureStep
 import com.yandex.plugin_tests_support.assertBrowserOpened
-import com.yandex.plugin_tests_support.executeShellCommand
 import com.yandex.plugin_tests_support.backgroundApp
 import com.yandex.plugin_tests_support.goBack
 import com.yandex.plugin_tests_support.platformDependant
@@ -17,10 +15,12 @@ import com.yandex.plugin_tests_support.waitForElement
 import io.qameta.allure.Epic
 import io.qameta.allure.Story
 import keys.BannerKeys
+import keys.CommonKeys
 import keys.HomeKeys
 import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
 import support.ScreenName
+import support.checkCallbackNotAppeared
 import support.safelyAssertAdLoaded
 import support.setAdUnitId
 import support.waitLogsCallback
@@ -142,6 +142,21 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
         waitLogsCallback(BannerCallbacks.loaded)
         backgroundApp(Duration.ofSeconds(10), true)
         waitForElement(BannerKeys.banner)
+    }
+
+    @Test()
+    fun reloadBannerAd() {
+        testName("Banner: Перезагрузка баннера")
+
+        waitAndClick(HomeKeys.bannerPage)
+        waitAndClick(BannerKeys.log)
+        setAdUnitId(ScreenName.Banner, "demo-banner-yandex", true)
+        waitAndClick(BannerKeys.loadAd)
+        waitLogsCallback(BannerCallbacks.loaded)
+        waitAndClick(CommonKeys.logClear)
+        checkCallbackNotAppeared(BannerCallbacks.loaded, Duration.ofSeconds(3))
+        waitAndClick(BannerKeys.loadAd)
+        waitLogsCallback(BannerCallbacks.loaded)
     }
 
     @Test

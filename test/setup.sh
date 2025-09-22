@@ -14,7 +14,7 @@ write_property () {
 
 prepare_android_env () {
     export FORCE_API=$API
-    . android/prepare_android_env.sh --run-test-local True --copy-from-resource False
+    . android/emulator/prepare_android_env.sh --run-test-local True --copy-from-resource False
 }
 
 if [[ $ARG == "recreate-android-emulators" || $ARG == "bootstrap-android" ]]; then

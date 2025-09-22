@@ -108,6 +108,7 @@ class _AdWidgetState extends State<AdWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      key: ValueKey(widget.bannerAd._id),
       width: width.toDouble(),
       height: height.toDouble(),
       child: widget.bannerAd._widget,
