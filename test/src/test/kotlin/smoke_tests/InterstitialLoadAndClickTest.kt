@@ -1,6 +1,7 @@
 package smoke_tests
 
 import callbacks.InterstitialCallbacks
+import com.yandex.plugin_tests_support.TestName
 import io.qameta.allure.Epic
 import io.qameta.allure.Story
 import keys.HomeKeys
@@ -9,7 +10,6 @@ import org.testng.annotations.Test
 import com.yandex.plugin_tests_support.returnToApp
 import com.yandex.plugin_tests_support.waitAndClick
 import com.yandex.plugin_tests_support.backgroundApp
-import com.yandex.plugin_tests_support.testName
 import com.yandex.plugin_tests_support.temporarilyLockScreen
 import com.yandex.plugin_tests_support.waitForElement
 import org.testng.annotations.DataProvider
@@ -48,9 +48,8 @@ class InterstitialLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Загрузка, клик и закрытие Interstitial рекламы")
     fun loadInterstitialAdAndClick() {
-        testName("Загрузка, клик и закрытие Interstitial рекламы")
-
         waitAndClick(HomeKeys.interstitialPage)
         waitAndClick(InterstitialKeys.log)
         setAdUnitId(ScreenName.Interstitial, "demo-interstitial-yandex", true)
@@ -72,9 +71,8 @@ class InterstitialLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Interstitial: Сворачивание приложения")
     fun loadInterstitialAdAndHide() {
-        testName("Interstitial: Сворачивание приложения")
-
         waitAndClick(HomeKeys.interstitialPage)
         waitAndClick(InterstitialKeys.log)
         setAdUnitId(ScreenName.Interstitial, "demo-interstitial-yandex", true)
@@ -86,9 +84,8 @@ class InterstitialLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Interstitial: Загрузка рекламы с некорректным блоком")
     fun loadInterstitialInvalidAd() {
-        testName("Interstitial: Загрузка рекламы с некорректным блоком")
-
         waitAndClick(HomeKeys.interstitialPage)
         waitAndClick(InterstitialKeys.log)
         setAdUnitId(ScreenName.Interstitial, "demo-interstitial-yandex1")
@@ -97,9 +94,8 @@ class InterstitialLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test(dataProvider = "demoBlocksProvider")
+    @TestName("Flutter Mediation и РСЯ. Отображение в landscape")
     fun loadDemoBanner(adUnitId: String) {
-        testName("Flutter Mediation и РСЯ. Отображение в landscape")
-
         waitAndClick(HomeKeys.interstitialPage)
         waitAndClick(InterstitialKeys.log)
         waitAndClick(InterstitialKeys.loadAd)
@@ -109,9 +105,8 @@ class InterstitialLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Flutter Блокировка приложения")
     fun loadInterstitialAdAndBlock() {
-        testName("Flutter Блокировка приложения")
-
         waitAndClick(HomeKeys.interstitialPage)
         waitAndClick(InterstitialKeys.log)
         setAdUnitId(ScreenName.Interstitial, "demo-interstitial-yandex", true)

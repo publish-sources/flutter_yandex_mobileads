@@ -1,6 +1,7 @@
 package smoke_tests
 
 import callbacks.RewardedCallbacks
+import com.yandex.plugin_tests_support.TestName
 import io.qameta.allure.Epic
 import io.qameta.allure.Story
 import keys.HomeKeys
@@ -8,7 +9,6 @@ import keys.RewardedKeys
 import org.testng.annotations.Test
 import com.yandex.plugin_tests_support.waitAndClick
 import com.yandex.plugin_tests_support.backgroundApp
-import com.yandex.plugin_tests_support.testName
 import com.yandex.plugin_tests_support.temporarilyLockScreen
 import com.yandex.plugin_tests_support.waitForElement
 import org.testng.annotations.DataProvider
@@ -46,8 +46,8 @@ class RewardedLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Flutter Загрузка, клик и закрытие Rewarded рекламы")
     fun loadRewardedAdAndClick() {
-        testName("Flutter Загрузка, клик и закрытие Rewarded рекламы")
         waitAndClick(HomeKeys.rewardedPage)
         waitAndClick(RewardedKeys.log)
         setAdUnitId(ScreenName.Rewarded, "demo-rewarded-yandex", true)
@@ -68,9 +68,8 @@ class RewardedLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Rewarded: Сворачивание приложения")
     fun loadRewardedAdAndHide() {
-        testName("Rewarded: Сворачивание приложения")
-
         waitAndClick(HomeKeys.rewardedPage)
         waitAndClick(RewardedKeys.log)
         setAdUnitId(ScreenName.Rewarded, "demo-rewarded-yandex", true)
@@ -82,9 +81,8 @@ class RewardedLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Rewarded: Загрузка рекламы с некорректным блоком")
     fun loadAppOpenInvalidAd() {
-        testName("Rewarded: Загрузка рекламы с некорректным блоком")
-
         waitAndClick(HomeKeys.rewardedPage)
         waitAndClick(RewardedKeys.log)
         setAdUnitId(ScreenName.Rewarded, "demo-rewarded-yandex1")
@@ -93,9 +91,8 @@ class RewardedLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test(dataProvider = "demoBlocksProvider")
+    @TestName("Flutter Mediation и РСЯ. Отображение Rewarded рекламы в AdRequest в landscape")
     fun loadDemoBanner(adUnitId: String) {
-        testName("Flutter Mediation и РСЯ. Отображение Rewarded рекламы в AdRequest в landscape")
-
         waitAndClick(HomeKeys.rewardedPage)
         waitAndClick(RewardedKeys.log)
         waitAndClick(RewardedKeys.loadAd)
@@ -105,9 +102,8 @@ class RewardedLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Flutter Блокировка приложения")
     fun loadRewardedAdAndBlock() {
-        testName("Flutter Блокировка приложения")
-
         waitAndClick(HomeKeys.rewardedPage)
         waitAndClick(RewardedKeys.log)
         setAdUnitId(ScreenName.Rewarded, "demo-rewarded-yandex", true)
@@ -122,9 +118,8 @@ class RewardedLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Flutter РСЯ. Закрытие рекламы до получения награды")
     fun loadRewardedAdAndClose() {
-        testName("Flutter РСЯ. Закрытие рекламы до получения награды")
-
         waitAndClick(HomeKeys.rewardedPage)
         waitAndClick(RewardedKeys.log)
         setAdUnitId(ScreenName.Rewarded, "demo-rewarded-yandex", true)

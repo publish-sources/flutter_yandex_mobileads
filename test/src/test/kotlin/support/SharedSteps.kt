@@ -34,7 +34,7 @@ enum class ScreenName {
 
 fun BaseTest.setAdUnitId(screen: ScreenName, adUnitId: String, isDry: Boolean = false) {
     if (isDry) {
-        allureStep("Ввести текст \"$adUnitId\" в поле Ad unit ID") {}
+        allureStep("Ввести текст \"$adUnitId\" в поле Ad unit ID")
     } else {
         enterText(screen.adUnitIdField(), adUnitId)
     }

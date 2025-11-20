@@ -17,6 +17,12 @@ prepare_android_env () {
     . android/emulator/prepare_android_env.sh --run-test-local True --copy-from-resource False
 }
 
+if [[ $ARG == "switch-sdk-internal" || $ARG == "bootstrap-ios" ]]; then
+    cd ../
+    ./scripts/switch_sdk_spi.sh internal
+    cd $current_directory
+fi
+
 if [[ $ARG == "recreate-android-emulators" || $ARG == "bootstrap-android" ]]; then
     cd ../../scripts
     prepare_android_env
@@ -51,13 +57,13 @@ fi
 if [[ $ARG == "recreate-simulators" || $ARG == "bootstrap-ios" ]]; then
     for id in 1 2
     do
-        xcrun simctl create "Test Device $id" com.apple.CoreSimulator.SimDeviceType.iPhone-15
+        xcrun simctl create "Test Device $id" com.apple.CoreSimulator.SimDeviceType.iPhone-15 com.apple.CoreSimulator.SimRuntime.iOS-18-5
     done
 fi
 
 if [[ $ARG == "build-ios" || $ARG == "bootstrap-ios" ]]; then
     cd ../internal_test_app
-    flutter build ios --no-codesign --simulator
+    INTERNAL_BUILD=true flutter build ios --no-codesign --simulator --flavor RunnerInternal
     cd ../test
 fi
 
@@ -67,4 +73,10 @@ if [[ $ARG == "run-all-tests-ios" || $ARG == "bootstrap-ios" ]]; then
     write_property platform ios
     npm install
     ./gradlew test
+fi
+
+if [[ $ARG == "switch-sdk-public" ]]; then
+    cd ../
+    ./scripts/switch_sdk_spi.sh public
+    cd $current_directory
 fi

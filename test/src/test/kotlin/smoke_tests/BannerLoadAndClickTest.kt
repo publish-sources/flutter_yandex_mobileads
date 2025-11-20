@@ -3,13 +3,14 @@ package smoke_tests
 import banner.BannerSizeType
 import banner.setBannerSizeType
 import callbacks.BannerCallbacks
+import com.yandex.plugin_tests_support.TestName
 import com.yandex.plugin_tests_support.assertBrowserOpened
+import com.yandex.plugin_tests_support.assertRequest
 import com.yandex.plugin_tests_support.backgroundApp
 import com.yandex.plugin_tests_support.goBack
 import com.yandex.plugin_tests_support.platformDependant
 import com.yandex.plugin_tests_support.returnToApp
 import com.yandex.plugin_tests_support.temporarilyLockScreen
-import com.yandex.plugin_tests_support.testName
 import com.yandex.plugin_tests_support.waitAndClick
 import com.yandex.plugin_tests_support.waitForElement
 import io.qameta.allure.Epic
@@ -58,9 +59,8 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test(dataProvider = "sizeTypeProvider")
+    @TestName("Загрузка и клик по баннеру")
     fun loadStickyBannerAdAndClick(sizeType: BannerSizeType) {
-        testName("Загрузка и клик по баннеру")
-
         waitAndClick(HomeKeys.bannerPage)
         waitAndClick(BannerKeys.log)
         setBannerSizeType(sizeType)
@@ -75,21 +75,21 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
             BannerCallbacks.impression,
             BannerCallbacks.leftApp
         ).forEach { callback -> waitLogsCallback(callback) }
-        platformDependant(ios = {}, android = {
+        platformDependant(android = { ->
             waitLogsCallback(BannerCallbacks.returnedToApp)
         })
     }
 
     @Test
+    @TestName("Загрузка и клик по Inline баннеру")
     fun loadInlineBannerAdAndClick() {
-        testName("Загрузка и клик по Inline баннеру")
-
         waitAndClick(HomeKeys.bannerPage)
         waitAndClick(BannerKeys.log)
         setBannerSizeType(BannerSizeType.Inline(400, 240))
         setAdUnitId(ScreenName.Banner, "demo-banner-yandex", true)
         waitAndClick(BannerKeys.loadAd)
         waitLogsCallback(BannerCallbacks.loaded)
+        assertRequest("/ads/v4/ad")
         waitAndClick(BannerKeys.banner)
         assertBrowserOpened()
         returnToApp()
@@ -99,16 +99,14 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
             BannerCallbacks.impression,
             BannerCallbacks.leftApp
         ).forEach { callback -> waitLogsCallback(callback) }
-        platformDependant(ios = {},
-            android = {
+        platformDependant(android = { ->
             waitLogsCallback(BannerCallbacks.returnedToApp)
         })
     }
 
     @Test
+    @TestName("Загрузка и клик по Sticky баннеру")
     fun loadStickyBannerAdAndClick() {
-        testName("Загрузка и клик по Sticky баннеру")
-
         waitAndClick(HomeKeys.bannerPage)
         waitAndClick(BannerKeys.log)
         waitAndClick(BannerKeys.stickySwitch)
@@ -124,16 +122,14 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
             BannerCallbacks.clicked,
             BannerCallbacks.leftApp
         ).forEach { callback -> waitLogsCallback(callback) }
-        platformDependant(ios = {},
-            android = {
-                waitLogsCallback(BannerCallbacks.returnedToApp)
-            })
+        platformDependant(android = { ->
+            waitLogsCallback(BannerCallbacks.returnedToApp)
+        })
     }
 
     @Test()
+    @TestName("Banner: Сворачивание приложения")
     fun loadBannerAdAndHide() {
-        testName("Banner: Сворачивание приложения")
-
         waitAndClick(HomeKeys.bannerPage)
         waitAndClick(BannerKeys.log)
         waitAndClick(BannerKeys.stickySwitch)
@@ -145,9 +141,8 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test()
+    @TestName("Banner: Перезагрузка баннера")
     fun reloadBannerAd() {
-        testName("Banner: Перезагрузка баннера")
-
         waitAndClick(HomeKeys.bannerPage)
         waitAndClick(BannerKeys.log)
         setAdUnitId(ScreenName.Banner, "demo-banner-yandex", true)
@@ -160,9 +155,8 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Banner: Загрузка рекламы с некорректным блоком")
     fun loadAppOpenInvalidAd() {
-        testName("Banner: Загрузка рекламы с некорректным блоком")
-
         waitAndClick(HomeKeys.bannerPage)
         waitAndClick(BannerKeys.log)
         setAdUnitId(ScreenName.Banner, "demo-banner-yandex1")
@@ -171,9 +165,8 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test(dataProvider = "demoBlocksProvider")
+    @TestName("Flutter Mediation: Загрузка и клик по Inline баннеру")
     fun loadStickyBannerAdAndClick(adUnitId: String) {
-        testName("Flutter Mediation: Загрузка и клик по Inline баннеру")
-
         val sizeTypes = arrayOf(
             BannerSizeType.Inline(320, 50),
             BannerSizeType.Sticky(null)
@@ -197,9 +190,8 @@ class BannerLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Flutter Блокировка приложения")
     fun loadBannerAdAndBlock() {
-        testName("Flutter Блокировка приложения")
-
         waitAndClick(HomeKeys.bannerPage)
         waitAndClick(BannerKeys.log)
         setAdUnitId(ScreenName.Banner, "demo-banner-yandex", true)

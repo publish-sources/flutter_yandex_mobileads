@@ -2,15 +2,15 @@ package smoke_tests
 
 import callbacks.BannerCallbacks
 import com.yandex.plugin_tests_support.Functionalities.Settings
+import com.yandex.plugin_tests_support.TestName
 import com.yandex.plugin_tests_support.allureStep
 import com.yandex.plugin_tests_support.assertScreenshot
 import com.yandex.plugin_tests_support.assertSwitch
-import com.yandex.plugin_tests_support.executeShellCommand
 import com.yandex.plugin_tests_support.goBack
 import com.yandex.plugin_tests_support.platformDependant
+import com.yandex.plugin_tests_support.pressKey
 import com.yandex.plugin_tests_support.rotateScreen
 import com.yandex.plugin_tests_support.scrollTo
-import com.yandex.plugin_tests_support.testName
 import com.yandex.plugin_tests_support.waitAndClick
 import com.yandex.plugin_tests_support.waitForElement
 import io.qameta.allure.Epic
@@ -31,9 +31,8 @@ import support.waitLogsCallback
 class SettingsTest: BaseFlutterTest() {
 
     @Test
+    @TestName("Flutter Debug Error Indicator")
     fun testDebugErrorIndicator() {
-        testName("Flutter Debug Error Indicator")
-
         waitAndClick(HomeKeys.settingsPage)
         waitAndClick(SettingsKeys.debugErrorIndicator)
         goBack()
@@ -46,8 +45,8 @@ class SettingsTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Flutter Настройки в дебаг панели")
     fun testDebugPanelSettings() {
-        testName("Flutter Настройки в дебаг панели")
         rotateScreen(ScreenOrientation.PORTRAIT)
 
         waitAndClick(HomeKeys.settingsPage)
@@ -61,12 +60,9 @@ class SettingsTest: BaseFlutterTest() {
         waitAndClick(HomeKeys.debugPanel)
         scrollTo(getDebugPanelSetting(DebugPanelKeys.hasUserConsentKey))
         checkDebugPanelSetting(DebugPanelKeys.ageRestrictedUser, "Yes")
-        platformDependant(
-            ios = {},
-            android = {
-                checkDebugPanelSetting(DebugPanelKeys.hasLocationConsent, "Yes")
-            }
-        )
+        platformDependant(android = { ->
+            checkDebugPanelSetting(DebugPanelKeys.hasLocationConsent, "Yes")
+        })
         checkDebugPanelSetting(DebugPanelKeys.hasUserConsentKey, "Yes")
         goBackFromDebugPanel()
         waitAndClick(HomeKeys.settingsPage)
@@ -85,18 +81,18 @@ class SettingsTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Flutter: Проверка DebugPanel")
     fun testDebugPanel() {
-        testName("Flutter: Проверка DebugPanel")
         rotateScreen(ScreenOrientation.PORTRAIT)
 
         waitAndClick(HomeKeys.debugPanel)
-        platformDependant(ios = {}, android = {
+        platformDependant(android = { ->
             waitForElement(DebugPanelKeys.root)
             assertScreenshot(DebugPanelKeys.integrationStatus, "integration_status")
         })
         checkDebugPanelSetting("Application ID")
         checkDebugPanelSetting("App Version")
-        platformDependant(ios = {
+        platformDependant(ios = { ->
             checkDebugPanelSetting("iOS Version")
         }, android = {
             checkDebugPanelSetting("System")
@@ -118,38 +114,28 @@ class SettingsTest: BaseFlutterTest() {
     }
 
     private fun goBackFromDebugPanel() {
-        allureStep("Вернуться назад") {
-            platformDependant(
-                ios = {
+        platformDependant(
+            ios = {
+                allureStep("Вернуться назад") {
                     waitAndClick(DebugPanelKeys.backArrow)
-                },
-                android = {
-                    executeShellCommand("input", arrayOf("keyevent", "KEYCODE_BACK"))
                 }
-            )
-        }
+            },
+            android = { -> goBack() }
+        )
     }
 
     private fun getDebugPanelSetting(setting: String): By {
         return platformDependant(
-            ios = {
-                return@platformDependant By.ByXPath("//*[@name='${setting}']")
-            },
-            android = {
-                return@platformDependant By.ByXPath("//*[@text='${setting}']")
-            }
+            ios = By.ByXPath("//*[@name='${setting}']"),
+            android = By.ByXPath("//*[@text='${setting}']")
         )
     }
 
     private fun checkDebugPanelSetting(setting: String, expectedStatus: String) {
         allureStep("Проверить: в настройке $setting выставлено значение $expectedStatus") {
             val xPath = platformDependant(
-                ios = {
-                    return@platformDependant By.ByXPath("//*[@name='${setting}']/following-sibling::*[@name='${expectedStatus}']")
-                },
-                android = {
-                    return@platformDependant By.ByXPath("//*[@text='${setting}']/following-sibling::*[@text='${expectedStatus}']")
-                }
+                ios = By.ByXPath("//*[@name='${setting}']/following-sibling::*[@name='${expectedStatus}']"),
+                android = By.ByXPath("//*[@text='${setting}']/following-sibling::*[@text='${expectedStatus}']")
             )
             waitForElement(xPath)
         }

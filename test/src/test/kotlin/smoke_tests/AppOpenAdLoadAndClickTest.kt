@@ -2,12 +2,12 @@ package smoke_tests
 
 import callbacks.AppOpenAdCallbacks
 import com.yandex.plugin_tests_support.Functionalities.AppOpenAd
+import com.yandex.plugin_tests_support.TestName
 import com.yandex.plugin_tests_support.allureStep
 import com.yandex.plugin_tests_support.assertBrowserOpened
 import com.yandex.plugin_tests_support.backgroundApp
 import com.yandex.plugin_tests_support.rotateScreen
 import com.yandex.plugin_tests_support.returnToApp
-import com.yandex.plugin_tests_support.testName
 import com.yandex.plugin_tests_support.temporarilyLockScreen
 import com.yandex.plugin_tests_support.waitAndClick
 import com.yandex.plugin_tests_support.waitForElement
@@ -39,9 +39,8 @@ class AppOpenAdLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("AppOpenAd: Загрузка и клик по рекламе")
     fun loadAppOpenAdAndClick() {
-        testName("AppOpenAd: Загрузка и клик по рекламе")
-
         waitAndClick(HomeKeys.appOpenAd)
         waitAndClick(AppOpenAdKeys.log)
         setAdUnitId(ScreenName.AppOpenAd, "demo-appopenad-yandex", true)
@@ -62,9 +61,8 @@ class AppOpenAdLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("Flutter Блокировка приложения")
     fun loadAppOpenAdAndBlock() {
-        testName("Flutter Блокировка приложения")
-
         waitAndClick(HomeKeys.appOpenAd)
         waitAndClick(AppOpenAdKeys.log)
         setAdUnitId(ScreenName.AppOpenAd, "demo-appopenad-yandex", true)
@@ -79,9 +77,8 @@ class AppOpenAdLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("AppOpenAd: Сворачивание приложения")
     fun loadAppOpenAdHideApp() {
-        testName("AppOpenAd: Сворачивание приложения")
-
         waitAndClick(HomeKeys.appOpenAd)
         waitAndClick(AppOpenAdKeys.log)
         setAdUnitId(ScreenName.AppOpenAd, "demo-appopenad-yandex", true)
@@ -93,9 +90,8 @@ class AppOpenAdLoadAndClickTest: BaseFlutterTest() {
     }
 
     @Test
+    @TestName("AppOpenAd: Загрузка рекламы с некорректным блоком")
     fun loadAppOpenInvalidAd() {
-        testName("AppOpenAd: Загрузка рекламы с некорректным блоком")
-
         waitAndClick(HomeKeys.appOpenAd)
         waitAndClick(AppOpenAdKeys.log)
         setAdUnitId(ScreenName.AppOpenAd, "demo-appopenad-yandex1")

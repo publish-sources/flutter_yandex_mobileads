@@ -21,8 +21,8 @@ object AppOpenAdKeys {
         isNative = true
     )
     val closeAd = ScreenElement.WithId(
-        iosId = "mac_close_button",
-        androidId = AndroidElementId.Tags("close", "mac_close_button"),
+        iosId = "mac_close_view",
+        androidId = AndroidElementId.Tags("close_view", "mac_close_view"),
         name = "крестик закрытия рекламы",
         isNative = true
     )
