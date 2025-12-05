@@ -6,6 +6,8 @@ import com.yandex.plugin_tests_support.TestName
 import com.yandex.plugin_tests_support.allureStep
 import com.yandex.plugin_tests_support.assertScreenshot
 import com.yandex.plugin_tests_support.assertSwitch
+import com.yandex.plugin_tests_support.checkDebugPanelSetting
+import com.yandex.plugin_tests_support.getDebugPanelSetting
 import com.yandex.plugin_tests_support.goBack
 import com.yandex.plugin_tests_support.platformDependant
 import com.yandex.plugin_tests_support.pressKey
@@ -64,7 +66,7 @@ class SettingsTest: BaseFlutterTest() {
             checkDebugPanelSetting(DebugPanelKeys.hasLocationConsent, "Yes")
         })
         checkDebugPanelSetting(DebugPanelKeys.hasUserConsentKey, "Yes")
-        goBackFromDebugPanel()
+        goBack()
         waitAndClick(HomeKeys.settingsPage)
         waitAndClick(SettingsKeys.userConsent)
         waitAndClick(SettingsKeys.locationConsent)
@@ -110,41 +112,5 @@ class SettingsTest: BaseFlutterTest() {
         checkDebugPanelSetting(DebugPanelKeys.hasLocationConsent)
         checkDebugPanelSetting(DebugPanelKeys.hasUserConsentKey)
         checkDebugPanelSetting("TCF Consent")
-
     }
-
-    private fun goBackFromDebugPanel() {
-        platformDependant(
-            ios = {
-                allureStep("Вернуться назад") {
-                    waitAndClick(DebugPanelKeys.backArrow)
-                }
-            },
-            android = { -> goBack() }
-        )
-    }
-
-    private fun getDebugPanelSetting(setting: String): By {
-        return platformDependant(
-            ios = By.ByXPath("//*[@name='${setting}']"),
-            android = By.ByXPath("//*[@text='${setting}']")
-        )
-    }
-
-    private fun checkDebugPanelSetting(setting: String, expectedStatus: String) {
-        allureStep("Проверить: в настройке $setting выставлено значение $expectedStatus") {
-            val xPath = platformDependant(
-                ios = By.ByXPath("//*[@name='${setting}']/following-sibling::*[@name='${expectedStatus}']"),
-                android = By.ByXPath("//*[@text='${setting}']/following-sibling::*[@text='${expectedStatus}']")
-            )
-            waitForElement(xPath)
-        }
-    }
-
-    private fun checkDebugPanelSetting(setting: String) {
-        allureStep("Проверить: в настройке $setting выставлено корректное значение") {
-            waitForElement(getDebugPanelSetting(setting))
-        }
-    }
-
 }

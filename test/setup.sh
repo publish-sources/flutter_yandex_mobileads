@@ -1,5 +1,6 @@
 ARG=$1
 API=$(<../../scripts/.current_android_api)
+RESOLUTION=$(<../../plugin-tests-support/.android-resolution)
 DEVICES_COUNT=2
 PROPERTIES_FILE=local.properties
 current_directory=$PWD
@@ -35,16 +36,22 @@ if [[ $ARG == "start-android-emulators" || $ARG == "bootstrap-android" ]]; then
     prepare_android_env
     for id in $(seq 1 $DEVICES_COUNT)
     do
-        . android/emulator/exec_emulator.sh "google-$API-$id" yes no
+        . android/emulator/exec_emulator.sh "google-$API-$id" yes no $RESOLUTION
     done
     . android/emulator/await_all_devices_boot.sh "$DEVICES_COUNT"
     cd $current_directory
 fi
 
 if [[ $ARG == "build-apk" || $ARG == "bootstrap-android" ]]; then
-    cd ../internal_test_app
+    cd ..
+    ../plugin-tests-support/switch_sdk_spi.sh android/build.gradle internal
+    ../plugin-tests-support/switch_sdk_spi.sh internal_test_app/android/app/build.gradle internal
+    cd internal_test_app
     flutter build apk --no-obfuscate -v
-    cd ../test
+    cd ..
+    ../plugin-tests-support/switch_sdk_spi.sh android/build.gradle public
+    ../plugin-tests-support/switch_sdk_spi.sh internal_test_app/android/app/build.gradle public
+    cd test
 fi
 
 if [[ $ARG == "run-all-tests-android" || $ARG == "bootstrap-android" ]]; then
